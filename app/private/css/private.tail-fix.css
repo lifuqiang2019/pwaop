@@ -1,0 +1,74 @@
+/* Contact chat: layout consolidated into private.css */
+
+/* Login / register: compact layout for small screens, safe-area handled by safe-area.css. */
+#private-app .private-register-screen,
+#private-app .private-login-screen {
+    gap: 8px !important;
+}
+
+#private-app .private-register-form,
+#private-app .private-login-form {
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+#private-app .private-register-main,
+#private-app .private-login-card {
+    margin-top: clamp(12px, 4vh, 28px) !important;
+}
+
+#private-app .private-register-bottom,
+#private-app .private-login-bottom-actions {
+    margin-top: auto !important;
+    padding-top: 16px !important;
+}
+
+#private-app .private-register-bottom .private-bottom-actions {
+    margin-top: 4px !important;
+}
+
+#private-app .private-login-links {
+    margin: 12px 0 0 !important;
+    padding-top: 0 !important;
+}
+
+#private-app .private-register-hero {
+    gap: 10px !important;
+}
+
+#private-app .private-avatar-frame {
+    width: 96px !important;
+    height: 96px !important;
+}
+
+#private-app .private-register-screen .private-title {
+    font-size: 24px !important;
+}
+
+#private-app .private-field {
+    min-height: 48px !important;
+}
+
+#private-app .private-input {
+    height: 46px !important;
+}
+
+#private-app .private-note,
+#private-app .private-checkbox {
+    line-height: 1.45 !important;
+}
+
+#private-app .private-login-switch {
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    width: fit-content !important;
+    justify-self: end !important;
+    padding: 8px 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: rgba(78, 63, 71, 0.62) !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    cursor: pointer !important;
+}

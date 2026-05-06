@@ -1,0 +1,3186 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+    <title>晚契 | DUSK VOW - Rinno</title>
+    <style>
+        /* 
+         * Rinno DUSK VOW App - Editorial & Sensual Edition
+         * 极简杂志风：无圆角，无玻璃，无机械感。
+         * 依靠排版节奏、留白、衬线字体与暗调色彩营造情色与性张力。
+         */
+
+        @font-face {
+            font-family: "Petit Formal Script";
+            src: url("https://test.fukit.cn/autoupload/f/wXA26G1dxk0UJp2Kcw6NzNiO_OyvX7mIgxFBfDMDErs/20260420/wXt4/PetitFormalScript-Regular.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            /* 极暗的暖黑色，带有一丝体肤的温度 */
+            --mag-bg: #0d0c0c; 
+            /* 羊皮纸/骨白色，阅读感极佳 */
+            --mag-text: #e8e3de; 
+            /* 褪色的暗玫瑰灰，用于次要文本 */
+            --mag-sub: #8c8585; 
+            /* 干涸的酒红/血红色，作为情欲的点缀 */
+            --mag-accent: #7d2529; 
+            /* 极细的分割线 */
+            --mag-line: 1px solid rgba(232, 227, 222, 0.15); 
+            --mag-shell-edge: rgba(255,255,255,0.03);
+            --mag-panel-bg: rgba(13, 12, 12, 0.88);
+            --mag-overlay-bg: rgba(13, 12, 12, 0.95);
+            --mag-card-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+            --mag-ghost-bg: rgba(125, 37, 41, 0.05);
+            --mag-option-bg: #121111;
+            --mag-soft-border: rgba(232, 227, 222, 0.18);
+            
+            --font-serif: "Songti SC", "STSong", "Times New Roman", Georgia, serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        }
+
+        body[data-wanye-theme="light"] {
+            --mag-bg: #f7f6f2;
+            --mag-text: #262120;
+            --mag-sub: #6f6762;
+            --mag-accent: #7a4742;
+            --mag-line: 1px solid rgba(38, 33, 32, 0.1);
+            --mag-shell-edge: rgba(38, 33, 32, 0.035);
+            --mag-panel-bg: rgba(250, 249, 245, 0.94);
+            --mag-overlay-bg: rgba(247, 246, 242, 0.95);
+            --mag-card-shadow: 0 12px 36px rgba(46, 37, 35, 0.12);
+            --mag-ghost-bg: rgba(122, 71, 66, 0.06);
+            --mag-option-bg: #fcfbf7;
+            --mag-soft-border: rgba(38, 33, 32, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--mag-bg);
+            color: var(--mag-text);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            overflow: hidden; 
+        }
+
+        /* 手机端容器 */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            height: 100vh;
+            height: 100dvh;
+            position: relative;
+            background: var(--mag-bg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-left: 1px solid var(--mag-shell-edge);
+            border-right: 1px solid var(--mag-shell-edge);
+        }
+
+        /* 页面切换机制 (淡入淡出) */
+        .page-view {
+            position: absolute;
+            inset: 0;
+            background: var(--mag-bg);
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .page-view::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        .page-view.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 2;
+        }
+
+        /* ================= 顶栏 (无胶囊，极简排版) ================= */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 65px 24px 24px;
+            position: sticky;
+            top: 0;
+            background: var(--mag-bg);
+            z-index: 10;
+            border-bottom: var(--mag-line);
+        }
+
+        .header-action {
+            background: none;
+            border: none;
+            color: var(--mag-sub);
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+
+        .header-action:active {
+            color: var(--mag-text);
+        }
+
+        .header-title {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            letter-spacing: 6px;
+            color: var(--mag-text);
+            font-weight: 300;
+        }
+
+        .header-action-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        /* ================= 杂志扉页 ================= */
+        .editorial-hero {
+            padding: 60px 30px 40px;
+            text-align: center;
+        }
+
+        .hero-issue {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: var(--mag-accent);
+            margin-bottom: 24px;
+            font-family: var(--font-sans);
+        }
+
+        .hero-headline {
+            font-family: var(--font-serif);
+            font-size: 46px;
+            font-weight: 300;
+            letter-spacing: 12px;
+            color: var(--mag-text);
+            margin: 0 0 20px 0;
+            text-indent: 12px;
+        }
+
+        .hero-prose {
+            font-family: var(--font-serif);
+            font-size: 13px;
+            line-height: 2.2;
+            color: var(--mag-sub);
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        /* ================= 人物陈列 ================= */
+        .roster {
+            padding: 0 30px 60px;
+        }
+
+        .roster-entry {
+            padding: 50px 0;
+            border-top: var(--mag-line);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .roster-entry.is-disabled {
+            opacity: 0.72;
+        }
+
+        .entry-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 30px;
+        }
+
+        .entry-identity {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .entry-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 227, 222, 0.18);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: var(--font-serif);
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: var(--mag-text);
+            background: rgba(255, 255, 255, 0.03);
+            flex-shrink: 0;
+        }
+
+        .entry-avatar.has-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .entry-status {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--mag-sub);
+            text-transform: uppercase;
+        }
+
+        .entry-number {
+            font-family: var(--font-serif);
+            font-size: 42px;
+            line-height: 0.8;
+            color: var(--mag-sub);
+            opacity: 0.3;
+        }
+
+        .entry-labels {
+            display: flex;
+            gap: 16px;
+        }
+
+        .label {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--mag-text);
+            text-transform: uppercase;
+        }
+
+        .entry-name {
+            font-family: var(--font-serif);
+            font-size: 26px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
+        }
+
+        .entry-quote {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--mag-accent);
+            font-style: italic;
+            margin-bottom: 24px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .entry-quote::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 1px;
+            background: var(--mag-accent);
+        }
+
+        .entry-body {
+            font-size: 12px;
+            line-height: 2.2;
+            color: var(--mag-sub);
+            text-align: justify;
+            margin-bottom: 40px;
+        }
+
+        .roster-empty {
+            padding: 60px 0;
+            border-top: var(--mag-line);
+            color: var(--mag-sub);
+            text-align: center;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        /* 直角框线按钮 */
+        .btn-outline {
+            width: 100%;
+            background: transparent;
+            color: var(--mag-text);
+            border: 1px solid var(--mag-sub);
+            padding: 16px 0;
+            text-align: center;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:active {
+            background: var(--mag-text);
+            color: var(--mag-bg);
+            border-color: var(--mag-text);
+        }
+
+        .btn-outline:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        /* ================= 剧本选择页 ================= */
+        .position-selector {
+            padding: 10px 30px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pos-label {
+            font-family: var(--font-serif);
+            font-size: 10px;
+            color: var(--mag-sub);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .pos-copy {
+            display: grid;
+            gap: 5px;
+        }
+
+        .pos-note {
+            font-size: 10px;
+            line-height: 1.6;
+            color: var(--mag-sub);
+        }
+
+        .pos-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .pos-btn {
+            background: transparent;
+            border: 1px solid rgba(232, 227, 222, 0.2);
+            color: var(--mag-sub);
+            padding: 6px 12px;
+            font-family: var(--font-sans);
+            font-size: 9px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pos-btn.active {
+            border-color: var(--mag-accent);
+            color: var(--mag-accent);
+            background: rgba(125, 37, 41, 0.05);
+        }
+
+        /* 横向滑动包裹区 - 悬浮效果 */
+        .scenario-wrapper {
+            position: relative;
+            width: 100%;
+            margin-top: 20px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 左右滑动箭头 */
+        .scroll-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 52px;
+            background: var(--mag-panel-bg);
+            border: 1px solid rgba(232, 227, 222, 0.2);
+            color: var(--mag-text);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .scroll-arrow:active {
+            background: var(--mag-text);
+            color: var(--mag-bg);
+            border-color: var(--mag-text);
+        }
+        .scroll-arrow.left {
+            left: 10px;
+        }
+        .scroll-arrow.right {
+            right: 10px;
+        }
+
+        /* 剧本列表区：强制左右留白，卡片居中对齐 */
+        .scenario-list {
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            width: 100%;
+            padding: 20px calc(50% - 135px); /* 居中核心：(总宽50% - 卡片宽度的一半)。假设卡片宽270px */
+        }
+
+        .scenario-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 高＞宽 的长方形剧本卡片 */
+        .scenario-card {
+            width: 270px;
+            height: 420px;
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            border: 1px solid rgba(232, 227, 222, 0.15);
+            background: var(--mag-bg);
+            box-shadow: var(--mag-card-shadow); /* 悬浮立体感 */
+            padding: 35px 24px;
+            cursor: pointer;
+            transition: border-color 0.3s, transform 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .scenario-card.is-empty {
+            cursor: default;
+        }
+
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: transparent;
+            transition: background 0.3s;
+        }
+
+        .scenario-card:active {
+            border-color: var(--mag-accent);
+            opacity: 0.88;
+            transform: none;
+        }
+
+        .scenario-card:active::before {
+            background: var(--mag-accent);
+        }
+
+        .scenario-card-delete {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border: 1px solid rgba(232, 227, 222, 0.18);
+            background: var(--mag-panel-bg);
+            color: var(--mag-sub);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .scenario-card-delete:active {
+            color: var(--mag-text);
+            border-color: var(--mag-accent);
+        }
+
+        .scenario-tag {
+            font-size: 9px;
+            color: var(--mag-accent);
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .scenario-title {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            color: var(--mag-text);
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* 描述区防遮挡内部滚动 */
+        .scenario-desc {
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--mag-sub);
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .scenario-desc::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scenario-card-footer {
+            margin-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mag-sub);
+        }
+
+        .scenario-card-enter {
+            color: var(--mag-text);
+        }
+
+        .scenario-card-source.is-generated {
+            color: var(--mag-accent);
+        }
+
+        /* ================= 房间页 ================= */
+        .room-meta {
+            text-align: center;
+        }
+
+        .room-meta .name {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            letter-spacing: 6px;
+            color: var(--mag-text);
+            margin-bottom: 4px;
+        }
+
+        .room-meta .status {
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--mag-accent);
+        }
+
+        .room-binding-status {
+            margin-top: 10px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: var(--mag-sub);
+        }
+
+        .room-binding-status.is-ready {
+            color: var(--mag-text);
+        }
+
+        .room-binding-status.is-error {
+            color: #b86a6d;
+        }
+
+        .room-binding-status:empty,
+        .log-binding-status:empty {
+            display: none;
+        }
+
+        .script-container {
+            flex: 1;
+            padding: 30px 24px 40px;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
+            gap: 40px; 
+        }
+
+        .script-container::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        .script-sys {
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 11px;
+            color: var(--mag-sub);
+            letter-spacing: 2px;
+            margin: 10px 0 30px;
+        }
+
+        /* 角色/用户发言排版 */
+        .dialogue-block {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 95%;
+        }
+
+        .dialogue-block.char {
+            align-self: flex-start;
+        }
+
+        .dialogue-block.user {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .dialogue-block.is-interactive {
+            cursor: pointer;
+        }
+
+        .dialogue-block.is-interactive:active {
+            opacity: 0.86;
+        }
+
+        .dialogue-block.is-menu-active {
+            outline: 1px solid rgba(232, 227, 222, 0.18);
+            padding: 14px;
+            margin: -14px;
+        }
+
+        .speaker-name {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--mag-sub);
+            text-transform: uppercase;
+        }
+
+        .char .speaker-name { color: var(--mag-accent); }
+
+        .action-text {
+            font-size: 13px;
+            line-height: 1.9;
+            color: var(--mag-sub);
+            font-style: italic;
+        }
+
+        .speech-text {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            line-height: 2.2;
+            color: var(--mag-text);
+        }
+
+        .user .speech-text {
+            color: rgba(232, 227, 222, 0.7);
+        }
+
+        .wanye-segment + .wanye-segment {
+            margin-top: 12px;
+        }
+
+        /* 底部输入框 */
+        .input-footer {
+            padding: 16px 24px calc(24px + env(safe-area-inset-bottom));
+            background: var(--mag-bg);
+            border-top: var(--mag-line);
+        }
+
+        .room-micro-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .room-micro-btn {
+            appearance: none;
+            border: 1px solid rgba(232, 227, 222, 0.16);
+            background: transparent;
+            color: var(--mag-sub);
+            padding: 3px 7px;
+            font-family: var(--font-sans);
+            font-size: 9px;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .room-micro-btn:active {
+            color: var(--mag-text);
+            border-color: var(--mag-accent);
+        }
+
+        .room-micro-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+        }
+
+        .input-field {
+            flex: 1;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--mag-sub);
+            border-radius: 0;
+            color: var(--mag-text);
+            font-family: var(--font-serif);
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 8px 0;
+            outline: none;
+            resize: none;
+            max-height: 120px;
+            transition: border-color 0.3s;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .input-field::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        .input-field:focus {
+            border-bottom-color: var(--mag-accent);
+        }
+
+        .input-field::placeholder {
+            color: var(--mag-sub);
+            opacity: 0.5;
+            font-style: italic;
+        }
+
+        .btn-send {
+            background: transparent;
+            border: none;
+            color: var(--mag-text);
+            font-family: var(--font-sans);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .btn-send:active {
+            color: var(--mag-accent);
+        }
+
+        .btn-send:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        /* ================= 结算日志弹窗 (Exit Log & Custom) ================= */
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: var(--mag-overlay-bg);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .log-card {
+            width: 80%; 
+            max-width: 320px; 
+            min-height: 480px; 
+            background: var(--mag-bg);
+            border: 1px solid rgba(232, 227, 222, 0.2);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .log-card::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+
+        .log-title {
+            font-family: var(--font-serif);
+            font-size: 22px;
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 8px;
+            color: var(--mag-text);
+        }
+
+        .log-sub {
+            font-size: 11px;
+            color: var(--mag-sub);
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .log-binding-status {
+            font-size: 11px;
+            line-height: 1.7;
+            color: var(--mag-sub);
+            text-align: center;
+            margin: -8px 0 24px;
+        }
+
+        .log-binding-status.is-ready {
+            color: var(--mag-text);
+        }
+
+        .log-binding-status.is-error {
+            color: #b86a6d;
+        }
+
+        .log-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px dashed rgba(232, 227, 222, 0.15);
+        }
+
+        .log-label {
+            font-family: var(--font-serif);
+            font-size: 15px;
+            color: var(--mag-text);
+        }
+
+        .log-control {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* 自定义复选框 */
+        .custom-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--mag-sub);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            outline: none;
+        }
+        .custom-checkbox:checked {
+            background: var(--mag-accent);
+            border-color: var(--mag-accent);
+        }
+        .custom-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 4px;
+            height: 10px;
+            border: solid var(--mag-bg);
+            border-width: 0 1px 1px 0;
+            transform: rotate(45deg);
+        }
+
+        /* 计数器 */
+        .counter-btn {
+            background: transparent;
+            border: 1px solid var(--mag-sub);
+            color: var(--mag-text);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .counter-btn:active {
+            background: var(--mag-text);
+            color: var(--mag-bg);
+        }
+        .counter-val {
+            font-family: var(--font-serif);
+            font-size: 16px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .log-actions {
+            margin-top: auto; 
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding-top: 20px;
+        }
+
+        .btn-solid {
+            width: 100%;
+            background: var(--mag-text);
+            color: var(--mag-bg);
+            border: none;
+            padding: 16px 0;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .btn-solid:active {
+            background: var(--mag-sub);
+        }
+
+        .btn-solid:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-solid.is-danger {
+            background: #a63539;
+            color: #fff4f1;
+        }
+
+        .btn-solid.is-danger:active {
+            background: #872528;
+        }
+
+        .wanye-form-label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--mag-sub);
+            text-transform: uppercase;
+            margin: 0 0 10px;
+        }
+
+        .wanye-input-select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--mag-sub);
+            color: var(--mag-text);
+            font-family: var(--font-serif);
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 8px 0;
+            outline: none;
+            border-radius: 0;
+            appearance: none;
+            margin-bottom: 24px;
+        }
+
+        .wanye-input-select:focus {
+            border-bottom-color: var(--mag-accent);
+        }
+
+        .wanye-input-select option {
+            background: var(--mag-option-bg);
+            color: var(--mag-text);
+        }
+
+        .wanye-form-note {
+            font-size: 11px;
+            line-height: 1.9;
+            color: var(--mag-sub);
+            margin-top: 14px;
+        }
+
+        .wanye-message-preview {
+            font-size: 12px;
+            line-height: 1.9;
+            color: var(--mag-sub);
+            white-space: pre-wrap;
+            border-top: 1px dashed rgba(232, 227, 222, 0.15);
+            padding-top: 18px;
+            margin-top: 8px;
+        }
+
+        .wanye-message-edit-hint {
+            font-size: 11px;
+            line-height: 1.8;
+            color: var(--mag-sub);
+            margin-bottom: 18px;
+        }
+
+        .wanye-segmented {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .wanye-segmented button {
+            appearance: none;
+            border: 1px solid rgba(232, 227, 222, 0.18);
+            background: transparent;
+            color: var(--mag-sub);
+            padding: 10px 12px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .wanye-segmented button.active {
+            border-color: var(--mag-accent);
+            color: var(--mag-accent);
+            background: var(--mag-ghost-bg);
+        }
+
+        .wanye-form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 12px;
+        }
+
+        .wanye-mini-button {
+            appearance: none;
+            border: 1px solid rgba(232, 227, 222, 0.18);
+            background: transparent;
+            color: var(--mag-sub);
+            padding: 8px 10px;
+            font-family: var(--font-sans);
+            font-size: 10px;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .wanye-mini-button:active {
+            color: var(--mag-text);
+            border-color: var(--mag-accent);
+        }
+
+        .wanye-code-editor {
+            width: 100%;
+            min-height: 180px;
+            border: 1px solid var(--mag-soft-border);
+            background: transparent;
+            color: var(--mag-text);
+            padding: 14px 12px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 12px;
+            line-height: 1.7;
+            resize: vertical;
+            outline: none;
+        }
+
+        .wanye-code-editor:focus {
+            border-color: var(--mag-accent);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ================== 目录页 (Directory) ================== -->
+        <div id="view-directory" class="page-view active">
+            
+            <header class="header-bar">
+                <button class="header-action" onclick="exitWanyeApp()">EXIT</button>
+                <span class="header-title">DUSK VOW</span>
+                <button class="header-action" onclick="openWanyeThemeModal()">THEME</button>
+            </header>
+
+            <section class="editorial-hero">
+                <span class="hero-issue">VOL. II / THE ABYSS</span>
+                <h1 class="hero-headline">晚契</h1>
+                <p class="hero-prose">卸下社会身份的伪装。在这里，疼痛与快感、支配与沦陷，拥有同一个名字。</p>
+            </section>
+
+            <main class="roster" id="wanye-roster">
+                <article class="roster-empty">正在载入私叙联系人…</article>
+            </main>
+        </div>
+
+        <!-- ================== 剧本选择页 (Scenarios) ================== -->
+        <div id="view-scenarios" class="page-view">
+            <header class="header-bar">
+                <button class="header-action" onclick="showView('view-directory')">BACK</button>
+                <span class="header-title">SCRIPTS</span>
+                <div class="header-action-group">
+                    <button class="header-action" type="button" onclick="requestGenerateCurrentContactScripts()">AI</button>
+                    <button class="header-action" type="button" onclick="openCustomScript(currentScenarioContactId)">ADD</button>
+                </div>
+            </header>
+
+            <section class="editorial-hero" style="padding-top: 30px; padding-bottom: 10px;">
+                <span class="hero-issue" id="scenario-char-role">DOMINATOR</span>
+                <h1 class="hero-headline" id="scenario-char-name" style="font-size: 32px; letter-spacing: 8px;">沈砚</h1>
+                <p class="hero-prose" id="scenario-char-prose">选择一场沉沦的境遇。</p>
+            </section>
+
+            <!-- 主导权选择区 -->
+            <div class="position-selector">
+                <div class="pos-copy">
+                    <span class="pos-label">LEAD / 当前主导</span>
+                    <span class="pos-note">这里只表示当前谁更主动，不锁死姿势，中途允许反攻与切换。</span>
+                </div>
+                <div class="pos-options">
+                    <button class="pos-btn active" data-wanye-lead-choice="contact" onclick="setWanyeLeadRole('contact', this)">联系人主导</button>
+                    <button class="pos-btn" data-wanye-lead-choice="user" onclick="setWanyeLeadRole('user', this)">用户主导</button>
+                </div>
+            </div>
+
+            <!-- 横向滑动的剧本列表（带箭头、悬浮居中排版） -->
+            <div class="scenario-wrapper">
+                <button class="scroll-arrow left" onclick="scrollScenarios(-1)">&#10094;</button>
+                <main class="scenario-list" id="scenario-list-container">
+                    <!-- 剧本卡片由 JS 动态生成 -->
+                </main>
+                <button class="scroll-arrow right" onclick="scrollScenarios(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- ================== 房间页 (The Room) ================== -->
+        <div id="view-room" class="page-view">
+            <header class="header-bar">
+                <button class="header-action" onclick="requestExit()">BACK</button>
+                <div class="room-meta">
+                    <div class="name" id="room-name">沈砚</div>
+                    <div class="status" id="room-status">THE ABYSS</div>
+                    <div class="room-binding-status" id="room-binding-status"></div>
+                </div>
+                <button class="header-action" onclick="openWanyeSettings()">SETTINGS</button>
+            </header>
+
+            <!-- 动态生成的剧本流 -->
+            <div class="script-container" id="chat-flow">
+                <!-- 占位，由 JS 注入内容 -->
+            </div>
+
+            <!-- 输入区 -->
+            <footer class="input-footer">
+                <div class="room-micro-actions">
+                    <button class="room-micro-btn" id="wanye-counter-button" type="button">反攻</button>
+                    <button class="room-micro-btn" id="wanye-escape-button" type="button">逃跑</button>
+                </div>
+                <div class="input-wrapper">
+                    <textarea class="input-field" id="wanye-room-input" rows="1" placeholder="Write your reaction..."></textarea>
+                    <button class="btn-send" id="wanye-send-button" type="button">SEND</button>
+                </div>
+            </footer>
+        </div>
+
+        <!-- ================== 结算日志弹窗 (Exit Log) ================== -->
+        <div id="modal-log" class="modal-overlay">
+            <div class="log-card">
+                <h3 class="log-title">INTIMACY LOG</h3>
+                <p class="log-sub">退出前，可选择暂停扮演，或把这一段完整写入拾光。</p>
+                <p class="log-binding-status" id="log-binding-status"></p>
+
+                <div style="flex: 1;">
+                    <div class="log-row">
+                        <span class="log-label">戴套 (Protection)</span>
+                        <input type="checkbox" class="custom-checkbox" id="log-condom" checked>
+                    </div>
+
+                    <div class="log-row">
+                        <span class="log-label">做爱次数 (Rounds)</span>
+                        <div class="log-control">
+                            <button class="counter-btn" onclick="updateCounter('log-rounds', -1)">-</button>
+                            <span class="counter-val" id="log-rounds">1</span>
+                            <button class="counter-btn" onclick="updateCounter('log-rounds', 1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="log-row">
+                        <span class="log-label">内射次数 (Creampies)</span>
+                        <div class="log-control">
+                            <button class="counter-btn" onclick="updateCounter('log-creampies', -1)">-</button>
+                            <span class="counter-val" id="log-creampies">0</span>
+                            <button class="counter-btn" onclick="updateCounter('log-creampies', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="log-actions">
+                    <button class="btn-solid is-danger" id="wanye-pause-session" onclick="confirmExit('pause-exit')" disabled>暂停扮演</button>
+                    <button class="btn-solid" id="wanye-save-exit" onclick="confirmExit('save-exit')" disabled>保存并退出</button>
+                    <button class="btn-outline" onclick="confirmExit('skip-exit')">跳过并退出</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================== 自定义剧本弹窗 (Custom Script) ================== -->
+        <div id="modal-custom" class="modal-overlay">
+            <div class="log-card">
+                <h3 class="log-title">CUSTOM</h3>
+                <p class="log-sub">把它保存成这位联系人的晚契核心剧本，再直接进入。</p>
+
+                <div style="flex: 1; padding-top: 10px;">
+                    <input type="text" id="custom-title" class="input-field" placeholder="剧本名称 (Title)" style="width: 100%; margin-bottom: 24px;">
+                    <input type="text" id="custom-tag" class="input-field" placeholder="标签 (Tag)" style="width: 100%; margin-bottom: 24px;">
+                    <textarea id="custom-desc" class="input-field" rows="3" placeholder="境遇描述 (Description)" style="width: 100%; border-bottom: 1px solid var(--mag-sub);"></textarea>
+                </div>
+
+                <div class="log-actions">
+                    <button class="btn-solid" onclick="confirmCustom()">保存并进入</button>
+                    <button class="btn-outline" onclick="closeCustom()">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-settings" class="modal-overlay">
+            <div class="log-card">
+                <h3 class="log-title">SETTINGS</h3>
+                <p class="log-sub">调整晚契开场、续写、文风和聊天页样式。保存后会一直沿用，除非你再次修改。</p>
+
+                <div style="flex: 1; padding-top: 10px;">
+                    <label class="wanye-form-label" for="wanye-target-length">目标字数</label>
+                    <input type="number" id="wanye-target-length" class="input-field" min="220" max="1800" step="10" style="width: 100%; margin-bottom: 24px;">
+
+                    <label class="wanye-form-label" for="wanye-user-perspective">用户旁白人称</label>
+                    <select id="wanye-user-perspective" class="wanye-input-select">
+                        <option value="first">第一人称 / 我</option>
+                        <option value="second">第二人称 / 你</option>
+                        <option value="third">第三人称 / TA</option>
+                    </select>
+
+                    <label class="wanye-form-label" for="wanye-contact-perspective">联系人旁白人称</label>
+                    <select id="wanye-contact-perspective" class="wanye-input-select">
+                        <option value="first">第一人称 / 我</option>
+                        <option value="second">第二人称 / 你</option>
+                        <option value="third">第三人称 / TA</option>
+                    </select>
+
+                    <label class="wanye-form-label" for="wanye-banned-words">违禁词</label>
+                    <textarea id="wanye-banned-words" class="input-field" rows="5" placeholder="每行或逗号分隔一个词" style="width: 100%; border-bottom: 1px solid var(--mag-sub); margin-bottom: 24px;"></textarea>
+
+                    <label class="wanye-form-label" for="wanye-writing-style">文风附加要求</label>
+                    <textarea id="wanye-writing-style" class="input-field" rows="4" placeholder="例如：更克制、更慢热、更偏心理拉扯、减少直白脏话、加强追逐与停顿感" style="width: 100%; border-bottom: 1px solid var(--mag-sub); margin-bottom: 24px;"></textarea>
+
+                    <div class="wanye-form-actions">
+                        <label class="wanye-form-label" for="wanye-chat-css" style="margin: 0;">聊天页全局 CSS</label>
+                        <button class="wanye-mini-button" type="button" onclick="copyWanyeCssTemplate('chat', this)">复制详细 CSS 模板</button>
+                    </div>
+                    <textarea id="wanye-chat-css" class="wanye-code-editor" spellcheck="false" placeholder="把你想长期应用在晚契聊天页的 CSS 写在这里。保存后会持续生效。"></textarea>
+                    <p class="wanye-form-note">默认目标字数是 500。这里的设置会同时影响动态开场、正常续写和重回生成；聊天页 CSS 只在房间页生效。</p>
+                </div>
+
+                <div class="log-actions">
+                    <button class="btn-solid" onclick="saveWanyeSettingsFromModal()">保存设置</button>
+                    <button class="btn-outline" onclick="closeWanyeSettings()">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-theme" class="modal-overlay">
+            <div class="log-card">
+                <h3 class="log-title">THEME</h3>
+                <p class="log-sub">切换晚契父级页的浅色 / 深色氛围，并长期保存父级全局 CSS。除非你再次修改，否则不会自动变动。</p>
+
+                <div style="flex: 1; padding-top: 10px;">
+                    <label class="wanye-form-label">主题模式</label>
+                    <div class="wanye-segmented">
+                        <button type="button" id="wanye-theme-dark" onclick="setWanyeThemeChoice('dark')">深色模式</button>
+                        <button type="button" id="wanye-theme-light" onclick="setWanyeThemeChoice('light')">浅色模式</button>
+                    </div>
+
+                    <div class="wanye-form-actions">
+                        <label class="wanye-form-label" for="wanye-shell-css" style="margin: 0;">父级全局 CSS</label>
+                        <button class="wanye-mini-button" type="button" onclick="copyWanyeCssTemplate('shell', this)">复制详细 CSS 模板</button>
+                    </div>
+                    <textarea id="wanye-shell-css" class="wanye-code-editor" spellcheck="false" placeholder="把你想长期应用在晚契父级页面的 CSS 写在这里。保存后会持续生效。"></textarea>
+                    <p class="wanye-form-note">父级全局 CSS 会覆盖目录页、剧本页、房间页与弹窗的基础样式；聊天页专属 CSS 请在房间 SETTINGS 里填写。</p>
+                </div>
+
+                <div class="log-actions">
+                    <button class="btn-solid" type="button" onclick="saveWanyeThemeFromModal()">保存主题</button>
+                    <button class="btn-outline" type="button" onclick="closeWanyeThemeModal()">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-message-actions" class="modal-overlay">
+            <div class="log-card" style="min-height: 0;">
+                <h3 class="log-title">MESSAGE</h3>
+                <p class="log-sub" id="wanye-message-actions-sub">长按消息后的快捷操作。</p>
+                <div class="wanye-message-preview" id="wanye-message-preview"></div>
+                <div class="log-actions">
+                    <button class="btn-solid" type="button" data-wanye-message-action="edit">编辑</button>
+                    <button class="btn-outline" type="button" data-wanye-message-action="backtrack">回溯</button>
+                    <button class="btn-outline" type="button" data-wanye-message-action="reroll">重回</button>
+                    <button class="btn-outline" type="button" onclick="closeWanyeMessageActions()">取消</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-message-edit" class="modal-overlay">
+            <div class="log-card">
+                <h3 class="log-title">EDIT</h3>
+                <p class="log-sub">按“旁白：/对话：”分段编辑，保持换行与多轮交替。</p>
+
+                <div style="flex: 1; padding-top: 10px;">
+                    <p class="wanye-message-edit-hint" id="wanye-message-edit-hint">至少七段起步，从旁白开始，并在旁白 / 对话之间严格交替；段数可以继续增加，不要写成固定模板。</p>
+                    <textarea id="wanye-edit-input" class="input-field" rows="12" placeholder="旁白：……&#10;&#10;对话：……&#10;&#10;旁白：……&#10;&#10;对话：……&#10;&#10;旁白：……&#10;&#10;……继续严格交替" style="width: 100%; min-height: 260px; border: 1px solid rgba(232, 227, 222, 0.18); padding: 14px 12px;"></textarea>
+                </div>
+
+                <div class="log-actions">
+                    <button class="btn-solid" onclick="saveWanyeMessageEdit()">保存修改</button>
+                    <button class="btn-outline" onclick="closeWanyeMessageEdit()">取消</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const WANYE_SETTINGS_STORAGE_KEY = 'rinno_wanye_settings_v3';
+        const WANYE_SETTINGS_LEGACY_KEYS = ['rinno_wanye_settings_v2'];
+        const WANYE_REPLY_TARGET_LENGTH_DEFAULT = 1000;
+        const WANYE_LONG_PRESS_MS = 480;
+        const WANYE_SEGMENT_MIN_COUNT = 5;
+        const WANYE_SPECIAL_ACTION_SUCCESS_RATE = 0.4;
+        const WANYE_CONTACT_COUNTERATTACK_RATE = 0.6;
+        const WANYE_WRITING_STYLE_LIMIT = 720;
+        const WANYE_CUSTOM_CSS_LIMIT = 12000;
+        const WANYE_THEME_STYLE_TAG_ID = 'wanye-shell-custom-style';
+        const WANYE_CHAT_STYLE_TAG_ID = 'wanye-chat-custom-style';
+        const WANYE_DIRECTORY_HERO_COPY = '卸下社会身份的伪装。在这里，疼痛与快感、支配与沦陷，拥有同一个名字。';
+        const WANYE_SHELL_CSS_TEMPLATE = `/* 晚契父级页 CSS 模板 */
+body[data-wanye-theme="dark"] {
+  /* 例如：
+  --mag-bg: #080708;
+  --mag-accent: #9a3438;
+  */
+}
+
+.header-bar {
+  /* 例如：
+  letter-spacing: 0.08em;
+  */
+}
+
+.editorial-hero .hero-headline {
+  /* 例如：
+  font-size: 52px;
+  */
+}`;
+        const WANYE_CHAT_CSS_TEMPLATE = `/* 晚契聊天页 CSS 模板 */
+#view-room .script-container {
+  /* 例如：
+  padding-inline: 26px;
+  */
+}
+
+#view-room .dialogue-block.char {
+  /* 例如：
+  border-left: 1px solid rgba(125, 37, 41, 0.45);
+  */
+}
+
+#view-room .dialogue-block.user .speech-text,
+#view-room .dialogue-block.user .action-text {
+  /* 例如：
+  color: var(--mag-text);
+  */
+}`;
+
+        let currentLeadRole = 'contact';
+        let currentRoomSession = null;
+        let wanyePrivateContacts = [];
+        let currentScenarioContactId = '';
+        let currentCustomContactId = '';
+        let currentWanyeMessageActionId = '';
+        let wanyeLongPressTimer = 0;
+        let wanyeThemeDraftMode = 'dark';
+
+        const DEFAULT_WANYE_SETTINGS = Object.freeze({
+            targetLength: WANYE_REPLY_TARGET_LENGTH_DEFAULT,
+            userPerspective: 'second',
+            contactPerspective: 'third',
+            bannedWords: '',
+            writingStyle: '',
+            themeMode: 'dark',
+            shellCss: '',
+            chatCss: ''
+        });
+
+        const modalLog = document.getElementById('modal-log');
+        const roomInput = document.getElementById('wanye-room-input');
+        const sendButton = document.getElementById('wanye-send-button');
+        const chatFlow = document.getElementById('chat-flow');
+        let wanyeSettings = loadWanyeSettings();
+
+        function escapeWanyeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatWanyeText(text = '') {
+            return escapeWanyeHtml(text).replace(/\n/g, '<br>');
+        }
+
+        function trimWanyeText(value, maxLength = 120) {
+            return String(value || '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
+        }
+
+        function normalizeWanyeReplyBlock(value, maxLength = 960) {
+            return String(value || '')
+                .replace(/\r/g, '')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim()
+                .slice(0, maxLength);
+        }
+
+        function clampWanyeNumber(value, min, max, fallback) {
+            const number = Math.round(Number(value));
+            if (!Number.isFinite(number)) return fallback;
+            return Math.min(max, Math.max(min, number));
+        }
+
+        function normalizeWanyePerspective(value, fallback = 'second') {
+            const safeValue = String(value || '').trim();
+            if (['first', 'second', 'third'].includes(safeValue)) return safeValue;
+            return fallback;
+        }
+
+        function normalizeWanyeBannedWordsText(value) {
+            const words = Array.from(new Set(
+                String(value || '')
+                    .replace(/\r/g, '')
+                    .split(/[\n,，、;；]+/g)
+                    .map(item => item.trim())
+                    .filter(Boolean)
+                    .slice(0, 48)
+            ));
+            return words.join('\n');
+        }
+
+        function normalizeWanyeWritingStyle(value) {
+            return String(value || '')
+                .replace(/\r/g, '')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim()
+                .slice(0, WANYE_WRITING_STYLE_LIMIT);
+        }
+
+        function normalizeWanyeLeadRole(value, fallback = 'contact') {
+            const safeValue = String(value || '').trim().toLowerCase();
+            if (['user', 'self', 'me', 'userlead', 'user_lead'].includes(safeValue)) return 'user';
+            if (['contact', 'char', 'assistant', 'partner', 'contactlead', 'contact_lead'].includes(safeValue)) return 'contact';
+            if (/[用户我己自]方?主导/u.test(String(value || ''))) return 'user';
+            if (/[联系角色对方ta他她]方?主导/u.test(String(value || ''))) return 'contact';
+            return fallback === 'user' ? 'user' : 'contact';
+        }
+
+        function getWanyeLeadRoleLabel(value, fallback = 'contact') {
+            return normalizeWanyeLeadRole(value, fallback) === 'user' ? '用户主导' : '联系人主导';
+        }
+
+        function normalizeWanyeThemeMode(value, fallback = 'dark') {
+            return String(value || '').trim().toLowerCase() === 'light'
+                ? 'light'
+                : (fallback === 'light' && !String(value || '').trim() ? 'light' : 'dark');
+        }
+
+        function normalizeWanyeCustomCss(value, maxLength = WANYE_CUSTOM_CSS_LIMIT) {
+            return String(value || '')
+                .replace(/\r/g, '')
+                .replace(/^\s*```(?:css)?/i, '')
+                .replace(/```\s*$/i, '')
+                .replace(/<\/?style[^>]*>/gi, '')
+                .trim()
+                .slice(0, maxLength);
+        }
+
+        function normalizeWanyeSettings(raw = {}) {
+            return {
+                targetLength: clampWanyeNumber(raw?.targetLength, 220, 1800, WANYE_REPLY_TARGET_LENGTH_DEFAULT),
+                userPerspective: normalizeWanyePerspective(raw?.userPerspective, 'second'),
+                contactPerspective: normalizeWanyePerspective(raw?.contactPerspective, 'third'),
+                bannedWords: normalizeWanyeBannedWordsText(raw?.bannedWords || ''),
+                writingStyle: normalizeWanyeWritingStyle(raw?.writingStyle || raw?.tone || ''),
+                themeMode: normalizeWanyeThemeMode(raw?.themeMode, 'dark'),
+                shellCss: normalizeWanyeCustomCss(raw?.shellCss || raw?.globalCss || ''),
+                chatCss: normalizeWanyeCustomCss(raw?.chatCss || raw?.roomCss || '')
+            };
+        }
+
+        function loadWanyeSettings() {
+            try {
+                const keys = [WANYE_SETTINGS_STORAGE_KEY, ...WANYE_SETTINGS_LEGACY_KEYS];
+                for (const key of keys) {
+                    const saved = window.localStorage?.getItem(key);
+                    if (!saved) continue;
+                    const normalized = normalizeWanyeSettings(JSON.parse(saved));
+                    if (key !== WANYE_SETTINGS_STORAGE_KEY) {
+                        try {
+                            window.localStorage?.setItem(WANYE_SETTINGS_STORAGE_KEY, JSON.stringify(normalized));
+                        } catch (error) {
+                            console.warn('Failed to migrate Wanye settings:', error);
+                        }
+                    }
+                    return normalized;
+                }
+                return normalizeWanyeSettings(DEFAULT_WANYE_SETTINGS);
+            } catch (error) {
+                return normalizeWanyeSettings(DEFAULT_WANYE_SETTINGS);
+            }
+        }
+
+        function persistWanyeSettings() {
+            try {
+                window.localStorage?.setItem(WANYE_SETTINGS_STORAGE_KEY, JSON.stringify(wanyeSettings));
+            } catch (error) {
+                console.warn('Failed to persist Wanye settings:', error);
+            }
+        }
+
+        function buildWanyeSettingsPayload() {
+            const safeSettings = normalizeWanyeSettings(wanyeSettings);
+            return {
+                targetLength: safeSettings.targetLength,
+                userPerspective: safeSettings.userPerspective,
+                contactPerspective: safeSettings.contactPerspective,
+                writingStyle: safeSettings.writingStyle,
+                bannedWords: safeSettings.bannedWords
+                    ? safeSettings.bannedWords.split('\n').map(item => item.trim()).filter(Boolean)
+                    : []
+            };
+        }
+
+        function getWanyeSegmentFloor(settings = wanyeSettings) {
+            const safeSettings = normalizeWanyeSettings(settings);
+            return safeSettings.targetLength >= 1120
+                ? 9
+                : safeSettings.targetLength >= 720
+                    ? 7
+                    : WANYE_SEGMENT_MIN_COUNT;
+        }
+
+        function buildWanyeAssistantEditHint() {
+            return `至少 ${getWanyeSegmentFloor()} 段起步，从旁白开始，并在旁白 / 对话之间严格交替；段数可以继续增加，不要写成固定模板。`;
+        }
+
+        function buildWanyeAssistantEditPlaceholder() {
+            const blocks = [];
+            const floor = getWanyeSegmentFloor();
+            for (let index = 0; index < floor; index += 1) {
+                blocks.push(`${index % 2 === 0 ? '旁白' : '对话'}：……`);
+            }
+            blocks.push('……继续严格交替');
+            return blocks.join('\n\n');
+        }
+
+        function normalizeWanyeTurnDirective(value = null) {
+            const source = value && typeof value === 'object' ? value : {};
+            const instruction = normalizeWanyeReplyBlock(source.instruction || source.prompt || source.note || '', 720);
+            if (!instruction) return null;
+            return {
+                type: trimWanyeText(source.type || source.kind || '', 40),
+                result: trimWanyeText(source.result || source.outcome || '', 32),
+                leadBefore: normalizeWanyeLeadRole(source.leadBefore || source.previousLead || 'contact', 'contact'),
+                leadAfter: normalizeWanyeLeadRole(source.leadAfter || source.nextLead || source.leadRole || 'contact', 'contact'),
+                instruction
+            };
+        }
+
+        function getWanyeCurrentViewId() {
+            return document.querySelector('.page-view.active')?.id || 'view-directory';
+        }
+
+        function ensureWanyeStyleTag(id = '') {
+            const safeId = String(id || '').trim();
+            if (!safeId) return null;
+            let style = document.getElementById(safeId);
+            if (style) return style;
+            style = document.createElement('style');
+            style.id = safeId;
+            document.head.appendChild(style);
+            return style;
+        }
+
+        function applyWanyeCustomCssRuntime() {
+            const safeSettings = normalizeWanyeSettings(wanyeSettings);
+            const shellStyle = ensureWanyeStyleTag(WANYE_THEME_STYLE_TAG_ID);
+            const chatStyle = ensureWanyeStyleTag(WANYE_CHAT_STYLE_TAG_ID);
+            if (shellStyle) shellStyle.textContent = safeSettings.shellCss;
+            if (chatStyle) {
+                chatStyle.textContent = getWanyeCurrentViewId() === 'view-room'
+                    ? safeSettings.chatCss
+                    : '';
+            }
+        }
+
+        function applyWanyeThemeRuntime() {
+            const safeSettings = normalizeWanyeSettings(wanyeSettings);
+            document.body.dataset.wanyeTheme = safeSettings.themeMode;
+            document.body.dataset.wanyeView = getWanyeCurrentViewId();
+            applyWanyeCustomCssRuntime();
+        }
+
+        async function writeWanyeClipboardText(text = '') {
+            const safeText = String(text || '').trim();
+            if (!safeText) return false;
+            try {
+                if (navigator.clipboard?.writeText) {
+                    await navigator.clipboard.writeText(safeText);
+                    return true;
+                }
+            } catch (error) {
+                console.warn('Failed to write Wanye clipboard text:', error);
+            }
+            const textarea = document.createElement('textarea');
+            textarea.value = safeText;
+            textarea.setAttribute('readonly', 'readonly');
+            textarea.style.position = 'fixed';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            const copied = document.execCommand('copy');
+            textarea.remove();
+            return copied;
+        }
+
+        function flashWanyeButtonLabel(button, successLabel = '已复制') {
+            if (!(button instanceof HTMLElement)) return;
+            const original = button.dataset.originalLabel || button.textContent || '';
+            button.dataset.originalLabel = original;
+            button.textContent = successLabel;
+            window.setTimeout(() => {
+                if (!button.isConnected) return;
+                button.textContent = button.dataset.originalLabel || original;
+            }, 1200);
+        }
+
+        async function copyWanyeCssTemplate(scope = 'chat', button = null) {
+            const template = scope === 'shell' ? WANYE_SHELL_CSS_TEMPLATE : WANYE_CHAT_CSS_TEMPLATE;
+            const copied = await writeWanyeClipboardText(template);
+            flashWanyeButtonLabel(button, copied ? '已复制' : '复制失败');
+        }
+
+        function syncWanyeLeadButtons() {
+            const safeLeadRole = normalizeWanyeLeadRole(currentLeadRole, 'contact');
+            document.querySelectorAll('[data-wanye-lead-choice]').forEach(button => {
+                const active = String(button.getAttribute('data-wanye-lead-choice') || '').trim() === safeLeadRole;
+                button.classList.toggle('active', active);
+            });
+        }
+
+        function setWanyeLeadRole(role, btn) {
+            currentLeadRole = normalizeWanyeLeadRole(role, currentLeadRole);
+            syncWanyeLeadButtons();
+            if (btn instanceof HTMLElement) btn.blur();
+        }
+
+        function syncWanyeRoomStatus(session = currentRoomSession) {
+            if (!session) return;
+            document.getElementById('room-status').textContent = `${session.scriptTitle || '未命名剧本'} | ${getWanyeLeadRoleLabel(session.leadRole || 'contact')}`;
+        }
+
+        function setWanyeThemeChoice(mode = 'dark', options = {}) {
+            wanyeThemeDraftMode = normalizeWanyeThemeMode(mode, normalizeWanyeSettings(wanyeSettings).themeMode);
+            document.getElementById('wanye-theme-dark')?.classList.toggle('active', wanyeThemeDraftMode === 'dark');
+            document.getElementById('wanye-theme-light')?.classList.toggle('active', wanyeThemeDraftMode === 'light');
+            if (options.preview !== false) {
+                document.body.dataset.wanyeTheme = wanyeThemeDraftMode;
+            }
+        }
+
+        function renderWanyeThemeModal() {
+            const safeSettings = normalizeWanyeSettings(wanyeSettings);
+            document.getElementById('wanye-shell-css').value = safeSettings.shellCss;
+            setWanyeThemeChoice(safeSettings.themeMode);
+        }
+
+        function openWanyeThemeModal() {
+            renderWanyeThemeModal();
+            document.getElementById('modal-theme').classList.add('active');
+        }
+
+        function closeWanyeThemeModal() {
+            document.getElementById('modal-theme').classList.remove('active');
+            applyWanyeThemeRuntime();
+        }
+
+        function saveWanyeThemeFromModal() {
+            wanyeSettings = normalizeWanyeSettings({
+                ...wanyeSettings,
+                themeMode: wanyeThemeDraftMode,
+                shellCss: document.getElementById('wanye-shell-css').value
+            });
+            persistWanyeSettings();
+            closeWanyeThemeModal();
+            applyWanyeThemeRuntime();
+        }
+
+        function formatWanyeIndex(index = 0) {
+            return ['I.', 'II.', 'III.', 'IV.', 'V.', 'VI.', 'VII.', 'VIII.', 'IX.', 'X.'][index] || `${index + 1}.`;
+        }
+
+        function getWanyeHostWindow() {
+            try {
+                return window.parent && window.parent !== window ? window.parent : window;
+            } catch (error) {
+                return window;
+            }
+        }
+
+        async function fetchWanyeContacts() {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoListWanyeContacts !== 'function') return [];
+                const result = await Promise.resolve(hostWindow.rinnoListWanyeContacts());
+                return Array.isArray(result) ? result : [];
+            } catch (error) {
+                console.warn('Failed to resolve Wanye contacts:', error);
+                return [];
+            }
+        }
+
+        async function fetchWanyeScripts(contactId = '') {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoListWanyeScripts !== 'function') {
+                    return { ok: false, message: '晚契剧本桥接不可用。', scripts: [] };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoListWanyeScripts({ contactId }));
+                return result && typeof result === 'object'
+                    ? { ok: Boolean(result.ok), message: result.message || '', scripts: Array.isArray(result.scripts) ? result.scripts : [] }
+                    : { ok: false, message: '晚契剧本读取失败。', scripts: [] };
+            } catch (error) {
+                console.warn('Failed to resolve Wanye scripts:', error);
+                return { ok: false, message: '晚契剧本读取失败。', scripts: [] };
+            }
+        }
+
+        async function requestGenerateWanyeScripts(contactId = '') {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoGenerateWanyeScripts !== 'function') {
+                    return { ok: false, message: '晚契剧本生成桥接不可用。', scripts: [] };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoGenerateWanyeScripts({ contactId }));
+                return result && typeof result === 'object'
+                    ? { ok: Boolean(result.ok), message: result.message || '', scripts: Array.isArray(result.scripts) ? result.scripts : [] }
+                    : { ok: false, message: '晚契剧本生成失败。', scripts: [] };
+            } catch (error) {
+                console.warn('Failed to generate Wanye scripts:', error);
+                return { ok: false, message: '晚契剧本生成失败。', scripts: [] };
+            }
+        }
+
+        async function requestSaveWanyeScript(contactId = '', payload = {}) {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoSaveWanyeScript !== 'function') {
+                    return { ok: false, message: '晚契剧本保存桥接不可用。' };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoSaveWanyeScript({
+                    contactId,
+                    ...payload
+                }));
+                return result && typeof result === 'object'
+                    ? result
+                    : { ok: false, message: '晚契剧本保存失败。' };
+            } catch (error) {
+                console.warn('Failed to save Wanye script:', error);
+                return { ok: false, message: '晚契剧本保存失败。' };
+            }
+        }
+
+        async function requestDeleteWanyeScript(contactId = '', scriptId = '') {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoDeleteWanyeScript !== 'function') {
+                    return { ok: false, message: '晚契剧本删除桥接不可用。' };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoDeleteWanyeScript({ contactId, scriptId }));
+                return result && typeof result === 'object'
+                    ? result
+                    : { ok: false, message: '晚契剧本删除失败。' };
+            } catch (error) {
+                console.warn('Failed to delete Wanye script:', error);
+                return { ok: false, message: '晚契剧本删除失败。' };
+            }
+        }
+
+        function getWanyeContactById(contactId = '') {
+            const safeContactId = String(contactId || '').trim();
+            return wanyePrivateContacts.find(contact => String(contact?.contactId || '').trim() === safeContactId) || null;
+        }
+
+        function buildWanyeContactBinding(contact = {}) {
+            const contactId = String(contact?.contactId || '').trim();
+            const accountId = String(contact?.accountId || '').trim();
+            if (!contactId) {
+                return {
+                    ok: false,
+                    reason: 'missing_contact_id',
+                    message: '当前晚契联系人没有精确 ID，无法继续。'
+                };
+            }
+            if (!accountId) {
+                return {
+                    ok: false,
+                    reason: 'missing_account_id',
+                    message: contact?.availabilityMessage || '该私叙联系人缺少必要标识，当前无法进入晚契。'
+                };
+            }
+            return {
+                ok: true,
+                contactId,
+                accountId,
+                title: contact?.title || '当前联系人',
+                subtitle: contact?.subtitle || ''
+            };
+        }
+
+        function setWanyeBindingStatus(binding, overrideMessage = '') {
+            const safeBinding = binding && typeof binding === 'object' ? binding : { ok: false };
+            const ready = Boolean(safeBinding.ok);
+            const text = overrideMessage || (ready ? '' : (safeBinding.message || '当前没有可用联系人，暂时无法继续。'));
+            const saveButton = document.getElementById('wanye-save-exit');
+            const pauseButton = document.getElementById('wanye-pause-session');
+            [document.getElementById('room-binding-status'), document.getElementById('log-binding-status')].forEach(element => {
+                if (!element) return;
+                element.textContent = text;
+                element.classList.toggle('is-ready', ready && !text);
+                element.classList.toggle('is-error', Boolean(text) || !ready);
+            });
+            if (saveButton) saveButton.disabled = !ready;
+            if (pauseButton) pauseButton.disabled = !ready;
+        }
+
+        function setWanyeSendState(isSending) {
+            if (!sendButton) return;
+            sendButton.disabled = Boolean(isSending);
+            sendButton.textContent = isSending ? '...' : 'SEND';
+        }
+
+        function buildWanyeContactLabels(contact = {}) {
+            const labels = ['PRIVATE CONTACT'];
+            if (contact?.profession) labels.push(trimWanyeText(contact.profession, 24));
+            else labels.push(contact?.available ? 'READY' : 'MISSING LINK');
+            return labels.slice(0, 2);
+        }
+
+        function buildWanyeContactQuote(contact = {}) {
+            return trimWanyeText(contact.signature || contact.subtitle || contact.preview || '今夜的契约，只写给你们两个人。', 120);
+        }
+
+        function buildWanyeContactBody(contact = {}) {
+            return trimWanyeText(
+                contact.note
+                || contact.preview
+                || '这个联系人来自私叙通讯。晚契只会围绕这一个对象继续展开。',
+                180
+            );
+        }
+
+        function createWanyeRosterAvatar(contact = {}) {
+            if (contact?.avatar) {
+                return `<span class="entry-avatar has-image"><img src="${escapeWanyeHtml(contact.avatar)}" alt=""></span>`;
+            }
+            const initial = Array.from(String(contact?.title || '私').trim())[0] || '私';
+            return `<span class="entry-avatar">${escapeWanyeHtml(initial)}</span>`;
+        }
+
+        function renderWanyeRoster() {
+            const roster = document.getElementById('wanye-roster');
+            if (!roster) return;
+            if (!wanyePrivateContacts.length) {
+                roster.innerHTML = '<article class="roster-empty">私叙里还没有可用联系人。先去私叙通讯添加联系人，再回到晚契选择对象。</article>';
+                return;
+            }
+            roster.innerHTML = wanyePrivateContacts.map((contact, index) => {
+                const labels = buildWanyeContactLabels(contact);
+                const disabled = !contact.available;
+                return `
+                    <article class="roster-entry${disabled ? ' is-disabled' : ''}">
+                        <div class="entry-meta">
+                            <span class="entry-number">${formatWanyeIndex(index)}</span>
+                            <div class="entry-labels">
+                                ${labels.map(label => `<span class="label">${escapeWanyeHtml(label)}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="entry-identity">
+                            ${createWanyeRosterAvatar(contact)}
+                            <div class="entry-status">${escapeWanyeHtml(contact.available ? '可进入晚契' : '当前不可用')}</div>
+                        </div>
+                        <h2 class="entry-name">${escapeWanyeHtml(contact.title || '未命名联系人')}</h2>
+                        <p class="entry-quote">“${escapeWanyeHtml(buildWanyeContactQuote(contact))}”</p>
+                        <p class="entry-body">${escapeWanyeHtml(buildWanyeContactBody(contact))}</p>
+                        <button class="btn-outline" type="button" data-wanye-contact-select="${escapeWanyeHtml(contact.contactId || '')}" ${disabled ? 'disabled' : ''}>${disabled ? '当前不可进入' : 'Select Script'}</button>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        async function loadWanyeContacts(forceRefresh = false) {
+            const contacts = await fetchWanyeContacts();
+            wanyePrivateContacts = Array.isArray(contacts) ? contacts : [];
+            renderWanyeRoster();
+            if (forceRefresh && document.getElementById('view-scenarios').classList.contains('active') && currentScenarioContactId) {
+                const contact = getWanyeContactById(currentScenarioContactId);
+                if (contact) void openScenarios(currentScenarioContactId, { autoGenerate: false });
+                else showView('view-directory');
+            }
+        }
+
+        function scrollScenarios(direction) {
+            const container = document.getElementById('scenario-list-container');
+            const card = container.querySelector('.scenario-card');
+            if (!card) return;
+            const scrollAmount = card.offsetWidth + 24;
+            container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
+
+        function showView(viewId) {
+            document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            document.body.dataset.wanyeView = viewId;
+            applyWanyeCustomCssRuntime();
+            if (viewId === 'view-directory') {
+                void loadWanyeContacts(false);
+            }
+        }
+
+        function exitWanyeApp() {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.closeWanyeApp === 'function') {
+                    hostWindow.closeWanyeApp();
+                    return;
+                }
+            } catch (error) {
+                console.warn('Failed to close Wanye app from frame:', error);
+            }
+            showView('view-directory');
+        }
+
+        function buildWanyeScenarioRole(contact = {}) {
+            return contact?.profession
+                ? trimWanyeText(contact.profession, 24)
+                : 'PRIVATE CONTACT';
+        }
+
+        function buildWanyeScenarioProse(contact = {}) {
+            return contact?.note
+                ? trimWanyeText(contact.note, 90)
+                : '选择一场沉沦的境遇。晚契会直接以这个私叙联系人为唯一对象。';
+        }
+
+        function normalizeWanyeSegmentType(value, fallback = 'narration') {
+            const safeValue = String(value || '').trim().toLowerCase();
+            if (['dialogue', 'speech', 'line'].includes(safeValue)) return 'dialogue';
+            if (['narration', 'action', 'narrative', 'description'].includes(safeValue)) return 'narration';
+            return fallback === 'dialogue' ? 'dialogue' : 'narration';
+        }
+
+        function normalizeWanyeReplySegments(segments = []) {
+            return (Array.isArray(segments) ? segments : [])
+                .map((segment, index) => {
+                    const type = normalizeWanyeSegmentType(segment?.type || segment?.kind || '', index % 2 === 1 ? 'dialogue' : 'narration');
+                    const content = normalizeWanyeReplyBlock(
+                        segment?.content || segment?.text || segment?.value || '',
+                        type === 'dialogue' ? 420 : 760
+                    );
+                    if (!content) return null;
+                    return { type, content };
+                })
+                .filter(Boolean);
+        }
+
+        function countWanyeSegmentsChars(segments = []) {
+            return normalizeWanyeReplySegments(segments)
+                .reduce((total, segment) => total + Array.from(segment.content || '').length, 0);
+        }
+
+        function buildWanyeMessagePlainText(message = {}) {
+            if (message.role === 'system') return String(message.text || '').trim();
+            if (message.role === 'assistant') {
+                return normalizeWanyeReplySegments(message.segments).map(segment => segment.content).join('\n');
+            }
+            return String(message.speech || message.text || message.action || '').replace(/\r/g, '').trim();
+        }
+
+        function buildWanyeAssistantEditDraft(message = {}) {
+            return normalizeWanyeReplySegments(message.segments)
+                .map(segment => `${segment.type === 'dialogue' ? '对话' : '旁白'}：${segment.content}`)
+                .join('\n\n');
+        }
+
+        function buildWanyeUserEditDraft(message = {}) {
+            return normalizeWanyeReplyBlock(message.speech || message.text || message.action || '', 1200);
+        }
+
+        function validateWanyeEditedSegments(segments = []) {
+            const normalizedSegments = normalizeWanyeReplySegments(segments);
+            const floor = getWanyeSegmentFloor();
+            if (normalizedSegments.length < floor) {
+                return { ok: false, message: `至少写出 ${floor} 段起步的交替结构，段数不要封死。` };
+            }
+            if (normalizedSegments[0].type !== 'narration' || normalizedSegments[normalizedSegments.length - 1].type !== 'narration') {
+                return { ok: false, message: '第一段和最后一段都必须是旁白。' };
+            }
+            for (let index = 1; index < normalizedSegments.length; index += 1) {
+                if (normalizedSegments[index].type === normalizedSegments[index - 1].type) {
+                    return { ok: false, message: '旁白与对话必须严格交替。' };
+                }
+            }
+            return { ok: true, segments: normalizedSegments };
+        }
+
+        function parseWanyeAssistantEditDraft(value = '') {
+            const blocks = String(value || '')
+                .replace(/\r/g, '')
+                .trim()
+                .split(/\n{2,}/g)
+                .map(item => item.trim())
+                .filter(Boolean);
+            if (!blocks.length) {
+                return { ok: false, message: '编辑内容不能为空。' };
+            }
+            const segments = [];
+            for (const block of blocks) {
+                const narrationMatch = block.match(/^\s*(旁白|narration)\s*[:：]\s*([\s\S]+)$/i);
+                if (narrationMatch) {
+                    segments.push({ type: 'narration', content: narrationMatch[2] });
+                    continue;
+                }
+                const dialogueMatch = block.match(/^\s*(对话|dialogue)\s*[:：]\s*([\s\S]+)$/i);
+                if (dialogueMatch) {
+                    segments.push({ type: 'dialogue', content: dialogueMatch[2] });
+                    continue;
+                }
+                return { ok: false, message: '每一段都必须以“旁白：”或“对话：”开头。' };
+            }
+            return validateWanyeEditedSegments(segments);
+        }
+
+        function renderWanyeAssistantSegments(segments = []) {
+            return normalizeWanyeReplySegments(segments).map(segment => `
+                <div class="${segment.type === 'dialogue' ? 'speech-text' : 'action-text'} wanye-segment">${formatWanyeText(segment.content)}</div>
+            `).join('');
+        }
+
+        function renderWanyeMessage(message = {}) {
+            if (message.role === 'system') {
+                return `<div class="script-sys">${formatWanyeText(message.text || '')}</div>`;
+            }
+            if (message.role === 'assistant') {
+                return `
+                    <div class="dialogue-block char is-interactive" data-wanye-message-id="${escapeWanyeHtml(message.id || '')}" data-wanye-message-role="assistant">
+                        <span class="speaker-name">${escapeWanyeHtml(currentRoomSession?.contact?.title || 'TA')}</span>
+                        ${renderWanyeAssistantSegments(message.segments)}
+                    </div>
+                `;
+            }
+            const actionText = message.action
+                ? `<div class="action-text">${formatWanyeText(message.action)}</div>`
+                : '';
+            const speechText = message.speech
+                ? `<div class="speech-text">${formatWanyeText(message.speech)}</div>`
+                : (!message.action && message.text
+                    ? `<div class="speech-text">${formatWanyeText(message.text)}</div>`
+                    : '');
+            return `
+                <div class="dialogue-block user is-interactive" data-wanye-message-id="${escapeWanyeHtml(message.id || '')}" data-wanye-message-role="user">
+                    <span class="speaker-name">You</span>
+                    ${actionText}
+                    ${speechText}
+                </div>
+            `;
+        }
+
+        function renderWanyeChatFlow() {
+            if (!chatFlow || !currentRoomSession) return;
+            chatFlow.innerHTML = currentRoomSession.messages.map(renderWanyeMessage).join('');
+            requestAnimationFrame(() => {
+                chatFlow.scrollTop = chatFlow.scrollHeight;
+            });
+        }
+
+        function buildWanyeSceneLeadLine(scenario = {}) {
+            const title = trimWanyeText(scenario?.title || '未命名剧本', 48) || '未命名剧本';
+            const tag = trimWanyeText(scenario?.tag || '晚契', 48) || '晚契';
+            return `—— ${title} / ${tag} ——`;
+        }
+
+        function renderWanyeScenarioState(message = '正在加载晚契剧本…') {
+            const container = document.getElementById('scenario-list-container');
+            if (!container) return;
+            container.innerHTML = `
+                <article class="scenario-card is-empty">
+                    <span class="scenario-tag">SCRIPT LIBRARY</span>
+                    <h3 class="scenario-title">晚契剧本库</h3>
+                    <div class="scenario-desc">${escapeWanyeHtml(message)}</div>
+                    <div class="scenario-card-footer">
+                        <span class="scenario-card-source">SHIGUANG CORE</span>
+                    </div>
+                </article>
+            `;
+        }
+
+        function renderWanyeScenarioCards(scripts = []) {
+            const container = document.getElementById('scenario-list-container');
+            if (!container) return;
+            const cards = [`
+                <article class="scenario-card" data-wanye-script-add="1">
+                    <span class="scenario-tag">USER ADD</span>
+                    <h3 class="scenario-title">手动添加剧本</h3>
+                    <div class="scenario-desc">把你自己写的晚契剧本直接绑定到这个联系人名下。保存后可进入、可删除，会长期留在这位联系人的剧本库里。</div>
+                    <div class="scenario-card-footer">
+                        <span class="scenario-card-source">PERSISTENT SCRIPT</span>
+                        <span class="scenario-card-enter">ADD</span>
+                    </div>
+                </article>
+            `];
+            if (!scripts.length) {
+                cards.push(`
+                    <article class="scenario-card is-empty">
+                        <span class="scenario-tag">SCRIPT LIBRARY</span>
+                        <h3 class="scenario-title">还没有现成剧本</h3>
+                        <div class="scenario-desc">你可以点上面的 USER ADD 手动新增，也可以点右上角 AI 生成围绕这位联系人的核心剧本。</div>
+                        <div class="scenario-card-footer">
+                            <span class="scenario-card-source">SHIGUANG CORE</span>
+                        </div>
+                    </article>
+                `);
+                container.innerHTML = cards.join('');
+                return;
+            }
+            container.innerHTML = cards.concat(scripts.map(script => {
+                const title = trimWanyeText(script?.title || '未命名剧本', 48) || '未命名剧本';
+                const tag = trimWanyeText(script?.tag || '晚契', 48) || '晚契';
+                const summary = trimWanyeText(script?.summary || script?.desc || '这场晚契还没有留下更多说明。', 260) || '这场晚契还没有留下更多说明。';
+                const source = String(script?.source || 'manual').trim() === 'generated' ? 'generated' : 'manual';
+                return `
+                    <article class="scenario-card" data-wanye-script-enter="${escapeWanyeHtml(script?.id || '')}">
+                        <button class="scenario-card-delete" type="button" data-wanye-script-delete="${escapeWanyeHtml(script?.id || '')}" aria-label="删除 ${escapeWanyeHtml(title)}">×</button>
+                        <span class="scenario-tag">${escapeWanyeHtml(tag)}</span>
+                        <h3 class="scenario-title">${escapeWanyeHtml(title)}</h3>
+                        <div class="scenario-desc">${escapeWanyeHtml(summary)}</div>
+                        <div class="scenario-card-footer">
+                            <span class="scenario-card-source${source === 'generated' ? ' is-generated' : ''}">${source === 'generated' ? 'AI GENERATED' : 'USER SCRIPT'}</span>
+                            <span class="scenario-card-enter">ENTER</span>
+                        </div>
+                    </article>
+                `;
+            })).join('');
+        }
+
+        async function openScenarios(contactId = '', options = {}) {
+            const contact = getWanyeContactById(contactId);
+            if (!contact || !contact.available) return;
+            currentScenarioContactId = contact.contactId;
+            document.getElementById('scenario-char-name').textContent = contact.title || '联系人';
+            document.getElementById('scenario-char-role').textContent = buildWanyeScenarioRole(contact);
+            document.getElementById('scenario-char-prose').textContent = buildWanyeScenarioProse(contact);
+            const container = document.getElementById('scenario-list-container');
+            showView('view-scenarios');
+            if (container) container.scrollLeft = 0;
+            renderWanyeScenarioState('正在读取这位联系人的晚契剧本库…');
+            let result = await fetchWanyeScripts(contact.contactId);
+            let scripts = Array.isArray(result?.scripts) ? result.scripts : [];
+            if (!scripts.length && options.autoGenerate !== false) {
+                document.getElementById('scenario-char-prose').textContent = '正在按这位联系人的设定生成晚契剧本…';
+                renderWanyeScenarioState('正在根据这位联系人的设定、关系和拾光档案生成晚契剧本…');
+                const generated = await requestGenerateWanyeScripts(contact.contactId);
+                if (!generated?.ok && generated?.message) {
+                    document.getElementById('scenario-char-prose').textContent = generated.message;
+                }
+                result = await fetchWanyeScripts(contact.contactId);
+                scripts = Array.isArray(result?.scripts) ? result.scripts : [];
+            }
+            if (!scripts.length) {
+                if (result?.message) document.getElementById('scenario-char-prose').textContent = result.message;
+                renderWanyeScenarioCards([]);
+                return;
+            }
+            document.getElementById('scenario-char-prose').textContent = buildWanyeScenarioProse(contact);
+            renderWanyeScenarioCards(scripts);
+        }
+
+        function openCustomScript(contactId = '') {
+            if (!contactId) return;
+            currentCustomContactId = contactId;
+            document.getElementById('custom-title').value = '';
+            document.getElementById('custom-tag').value = '';
+            document.getElementById('custom-desc').value = '';
+            document.getElementById('modal-custom').classList.add('active');
+        }
+
+        function closeCustom() {
+            document.getElementById('modal-custom').classList.remove('active');
+        }
+
+        async function requestGenerateCurrentContactScripts() {
+            if (!currentScenarioContactId) return;
+            const contact = getWanyeContactById(currentScenarioContactId);
+            if (!contact) return;
+            document.getElementById('scenario-char-prose').textContent = '正在按这位联系人的设定生成新的晚契剧本…';
+            renderWanyeScenarioState('正在重新生成这位联系人的晚契剧本库…');
+            const result = await requestGenerateWanyeScripts(currentScenarioContactId);
+            if (!result?.ok && result?.message) {
+                document.getElementById('scenario-char-prose').textContent = result.message;
+            }
+            await openScenarios(currentScenarioContactId, { autoGenerate: false });
+        }
+
+        function renderWanyeSettingsModal() {
+            const safeSettings = normalizeWanyeSettings(wanyeSettings);
+            document.getElementById('wanye-target-length').value = String(safeSettings.targetLength);
+            document.getElementById('wanye-user-perspective').value = safeSettings.userPerspective;
+            document.getElementById('wanye-contact-perspective').value = safeSettings.contactPerspective;
+            document.getElementById('wanye-banned-words').value = safeSettings.bannedWords;
+            document.getElementById('wanye-writing-style').value = safeSettings.writingStyle;
+            document.getElementById('wanye-chat-css').value = safeSettings.chatCss;
+        }
+
+        function openWanyeSettings() {
+            renderWanyeSettingsModal();
+            document.getElementById('modal-settings').classList.add('active');
+        }
+
+        function closeWanyeSettings() {
+            document.getElementById('modal-settings').classList.remove('active');
+        }
+
+        function saveWanyeSettingsFromModal() {
+            wanyeSettings = normalizeWanyeSettings({
+                targetLength: document.getElementById('wanye-target-length').value,
+                userPerspective: document.getElementById('wanye-user-perspective').value,
+                contactPerspective: document.getElementById('wanye-contact-perspective').value,
+                bannedWords: document.getElementById('wanye-banned-words').value,
+                writingStyle: document.getElementById('wanye-writing-style').value,
+                chatCss: document.getElementById('wanye-chat-css').value,
+                themeMode: wanyeSettings.themeMode,
+                shellCss: wanyeSettings.shellCss
+            });
+            persistWanyeSettings();
+            applyWanyeCustomCssRuntime();
+            closeWanyeSettings();
+            if (currentRoomSession?.binding?.ok) {
+                setWanyeBindingStatus(currentRoomSession.binding, '晚契生成设置已保存。');
+            }
+        }
+
+        function getCurrentWanyeMessage() {
+            if (!currentRoomSession || !currentWanyeMessageActionId) return null;
+            return currentRoomSession.messages.find(message => String(message.id || '').trim() === String(currentWanyeMessageActionId || '').trim()) || null;
+        }
+
+        function clearWanyeActiveMessageMark() {
+            document.querySelectorAll('[data-wanye-message-id].is-menu-active').forEach(node => {
+                node.classList.remove('is-menu-active');
+            });
+        }
+
+        function openWanyeMessageActions(messageId = '') {
+            const safeMessageId = String(messageId || '').trim();
+            if (!safeMessageId || !currentRoomSession) return;
+            const message = currentRoomSession.messages.find(item => String(item.id || '').trim() === safeMessageId);
+            if (!message || !['assistant', 'user'].includes(String(message.role || '').trim())) return;
+            currentWanyeMessageActionId = safeMessageId;
+            clearWanyeActiveMessageMark();
+            const target = document.querySelector(`[data-wanye-message-id="${safeMessageId.replace(/["\\]/g, '\\$&')}"]`);
+            if (target) target.classList.add('is-menu-active');
+            document.getElementById('wanye-message-actions-sub').textContent = message.role === 'user'
+                ? '长按你的消息后的快捷操作。'
+                : '长按联系人回复后的快捷操作。';
+            document.getElementById('wanye-message-preview').textContent = trimWanyeText(buildWanyeMessagePlainText(message), 240);
+            document.getElementById('modal-message-actions').classList.add('active');
+        }
+
+        function closeWanyeMessageActions(preserveSelection = false) {
+            if (!preserveSelection) currentWanyeMessageActionId = '';
+            clearWanyeActiveMessageMark();
+            document.getElementById('modal-message-actions').classList.remove('active');
+        }
+
+        function openWanyeMessageEdit(messageId = '') {
+            const safeMessageId = String(messageId || '').trim();
+            const message = currentRoomSession?.messages?.find(item => String(item.id || '').trim() === safeMessageId);
+            if (!message || !['assistant', 'user'].includes(String(message.role || '').trim())) return;
+            currentWanyeMessageActionId = safeMessageId;
+            const isAssistant = message.role === 'assistant';
+            document.getElementById('wanye-edit-input').value = isAssistant
+                ? buildWanyeAssistantEditDraft(message)
+                : buildWanyeUserEditDraft(message);
+            document.getElementById('wanye-message-edit-hint').textContent = isAssistant
+                ? buildWanyeAssistantEditHint()
+                : '这里直接改你的原话。保存后，这条 user 消息会立刻替换成新内容。';
+            document.getElementById('wanye-edit-input').placeholder = isAssistant
+                ? buildWanyeAssistantEditPlaceholder()
+                : '直接输入你想保留的 user 内容';
+            closeWanyeMessageActions(true);
+            document.getElementById('modal-message-edit').classList.add('active');
+        }
+
+        function closeWanyeMessageEdit() {
+            currentWanyeMessageActionId = '';
+            document.getElementById('modal-message-edit').classList.remove('active');
+        }
+
+        function saveWanyeMessageEdit() {
+            if (!currentRoomSession || !currentWanyeMessageActionId) return;
+            const currentMessage = getCurrentWanyeMessage();
+            if (!currentMessage) return;
+            const isAssistant = currentMessage.role === 'assistant';
+            const parsed = isAssistant
+                ? parseWanyeAssistantEditDraft(document.getElementById('wanye-edit-input').value)
+                : { ok: true, text: normalizeWanyeReplyBlock(document.getElementById('wanye-edit-input').value, 1200) };
+            if (!parsed.ok || (!isAssistant && !parsed.text)) {
+                setWanyeBindingStatus(currentRoomSession.binding, parsed.message || '当前编辑格式不正确。');
+                return;
+            }
+            currentRoomSession.messages = currentRoomSession.messages.map(message => (
+                String(message.id || '').trim() === String(currentWanyeMessageActionId || '').trim()
+                    ? (isAssistant
+                        ? {
+                            ...message,
+                            segments: parsed.segments,
+                            charCount: countWanyeSegmentsChars(parsed.segments)
+                        }
+                        : {
+                            ...message,
+                            speech: message.action && !message.speech && !message.text ? '' : parsed.text,
+                            action: message.action && !message.speech && !message.text ? parsed.text : '',
+                            text: ''
+                        })
+                    : message
+            ));
+            renderWanyeChatFlow();
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            closeWanyeMessageEdit();
+            setWanyeBindingStatus(currentRoomSession.binding, isAssistant ? '已更新这条回复。' : '已更新这条 user 消息。');
+        }
+
+        function createWanyeUserMessage(value = '') {
+            return {
+                id: `wanye-user-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+                role: 'user',
+                speech: normalizeWanyeReplyBlock(value, 1200),
+                action: '',
+                text: '',
+                createdAt: Date.now()
+            };
+        }
+
+        function createWanyeUserActionMessage(value = '') {
+            return {
+                id: `wanye-user-action-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+                role: 'user',
+                speech: '',
+                action: normalizeWanyeReplyBlock(value, 1200),
+                text: '',
+                createdAt: Date.now()
+            };
+        }
+
+        function createWanyeAssistantMessageFromReply(reply = {}) {
+            const segments = normalizeWanyeReplySegments(reply?.segments);
+            return {
+                id: `wanye-assistant-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+                role: 'assistant',
+                segments,
+                charCount: Number(reply?.charCount) || countWanyeSegmentsChars(segments),
+                createdAt: Date.now()
+            };
+        }
+
+        function normalizeWanyeSessionMessage(message = {}, index = 0) {
+            const role = message?.role === 'assistant'
+                ? 'assistant'
+                : message?.role === 'system'
+                    ? 'system'
+                    : 'user';
+            const createdAt = Math.max(0, Number(message?.createdAt) || Date.now());
+            const id = String(message?.id || `wanye-message-${Date.now().toString(36)}-${index}`).trim();
+            if (role === 'assistant') {
+                const segments = normalizeWanyeReplySegments(message?.segments);
+                if (!segments.length) return null;
+                return {
+                    id,
+                    role,
+                    segments,
+                    charCount: Number(message?.charCount) || countWanyeSegmentsChars(segments),
+                    createdAt
+                };
+            }
+            if (role === 'system') {
+                const text = normalizeWanyeReplyBlock(message?.text || '', 240);
+                if (!text) return null;
+                return { id, role, text, createdAt };
+            }
+            const speech = normalizeWanyeReplyBlock(message?.speech || '', 1200);
+            const action = normalizeWanyeReplyBlock(message?.action || '', 1200);
+            const text = normalizeWanyeReplyBlock(message?.text || '', 1200);
+            if (!speech && !action && !text) return null;
+            return {
+                id,
+                role,
+                speech,
+                action,
+                text,
+                createdAt
+            };
+        }
+
+        function normalizeWanyeSessionMessages(messages = []) {
+            return (Array.isArray(messages) ? messages : [])
+                .map((message, index) => normalizeWanyeSessionMessage(message, index))
+                .filter(Boolean);
+        }
+
+        function serializeWanyeSessionMessages(messages = []) {
+            return normalizeWanyeSessionMessages(messages).map(message => ({
+                id: message.id,
+                role: message.role,
+                text: message.text || '',
+                action: message.action || '',
+                speech: message.speech || '',
+                charCount: message.charCount || 0,
+                segments: normalizeWanyeReplySegments(message.segments).map(segment => ({
+                    type: segment.type,
+                    content: segment.content
+                })),
+                createdAt: message.createdAt || 0
+            }));
+        }
+
+        async function fetchWanyeSessionDraft(payload = {}) {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoGetWanyeSessionDraft !== 'function') {
+                    return { ok: false, message: '晚契草稿桥接不可用。', draft: null };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoGetWanyeSessionDraft(payload));
+                return result && typeof result === 'object'
+                    ? { ok: Boolean(result.ok), message: result.message || '', draft: result.draft || null }
+                    : { ok: false, message: '晚契草稿读取失败。', draft: null };
+            } catch (error) {
+                console.warn('Failed to fetch Wanye draft:', error);
+                return { ok: false, message: '晚契草稿读取失败。', draft: null };
+            }
+        }
+
+        async function requestSaveWanyeSessionDraft(payload = {}) {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoSaveWanyeSessionDraft !== 'function') {
+                    return { ok: false, message: '晚契草稿保存桥接不可用。' };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoSaveWanyeSessionDraft(payload));
+                return result && typeof result === 'object'
+                    ? result
+                    : { ok: false, message: '晚契草稿保存失败。' };
+            } catch (error) {
+                console.warn('Failed to save Wanye draft:', error);
+                return { ok: false, message: '晚契草稿保存失败。' };
+            }
+        }
+
+        async function requestDeleteWanyeSessionDraft(payload = {}) {
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoDeleteWanyeSessionDraft !== 'function') {
+                    return { ok: false, message: '晚契草稿删除桥接不可用。' };
+                }
+                const result = await Promise.resolve(hostWindow.rinnoDeleteWanyeSessionDraft(payload));
+                return result && typeof result === 'object'
+                    ? result
+                    : { ok: false, message: '晚契草稿删除失败。' };
+            } catch (error) {
+                console.warn('Failed to delete Wanye draft:', error);
+                return { ok: false, message: '晚契草稿删除失败。' };
+            }
+        }
+
+        function buildWanyeSessionDraftPayload(session = currentRoomSession) {
+            if (!session?.binding?.ok) return null;
+            return {
+                id: session.id,
+                contactId: session.binding.contactId,
+                accountId: session.binding.accountId,
+                partner: session.partner,
+                scenarioId: session.scenarioId,
+                scriptTitle: session.scriptTitle,
+                scriptTag: session.scriptTag,
+                scriptSummary: session.scriptSummary,
+                leadRole: normalizeWanyeLeadRole(session.leadRole, 'contact'),
+                position: getWanyeLeadRoleLabel(session.leadRole || 'contact'),
+                messages: serializeWanyeSessionMessages(session.messages),
+                startedAt: session.startedAt || Date.now(),
+                phaseStartedAt: session.phaseStartedAt || session.startedAt || Date.now(),
+                archiveCursor: Math.max(0, Number(session.archiveCursor) || 0),
+                turnDirective: normalizeWanyeTurnDirective(session.pendingTurnDirective || null),
+                updatedAt: Date.now()
+            };
+        }
+
+        async function persistWanyeSessionDraft(session = currentRoomSession, options = {}) {
+            const payload = buildWanyeSessionDraftPayload(session);
+            if (!payload) return false;
+            const result = await requestSaveWanyeSessionDraft(payload);
+            if (!result?.ok && !options.silent && session?.binding?.ok) {
+                setWanyeBindingStatus(session.binding, result?.message || '晚契草稿保存失败。');
+            }
+            return Boolean(result?.ok);
+        }
+
+        async function discardWanyeSessionDraft(session = currentRoomSession, options = {}) {
+            if (!session?.binding?.ok) return true;
+            const result = await requestDeleteWanyeSessionDraft({
+                contactId: session.binding.contactId,
+                accountId: session.binding.accountId,
+                scenarioId: session.scenarioId,
+                scriptTitle: session.scriptTitle
+            });
+            if (!result?.ok && !options.silent) {
+                setWanyeBindingStatus(session.binding, result?.message || '晚契草稿删除失败。');
+            }
+            return Boolean(result?.ok);
+        }
+
+        function getWanyeArchivableMessages(session = currentRoomSession) {
+            if (!session || !Array.isArray(session.messages)) return [];
+            const cursor = Math.max(0, Number(session.archiveCursor) || 0);
+            return serializeWanyeSessionMessages(session.messages.slice(cursor));
+        }
+
+        function buildWanyeTurnDirectivePayload(directive = null) {
+            const safeDirective = normalizeWanyeTurnDirective(directive);
+            if (!safeDirective) return null;
+            return {
+                type: safeDirective.type,
+                result: safeDirective.result,
+                leadBefore: safeDirective.leadBefore,
+                leadAfter: safeDirective.leadAfter,
+                instruction: safeDirective.instruction
+            };
+        }
+
+        function resolveWanyeTurnDirective(mode = 'reply') {
+            if (!currentRoomSession) return null;
+            const pending = normalizeWanyeTurnDirective(currentRoomSession.pendingTurnDirective || null);
+            if (pending) {
+                return {
+                    directive: pending,
+                    nextLead: normalizeWanyeLeadRole(pending.leadAfter, currentRoomSession.leadRole),
+                    consumePending: true
+                };
+            }
+            if (mode === 'reply' && normalizeWanyeLeadRole(currentRoomSession.leadRole, 'contact') === 'user' && Math.random() < WANYE_CONTACT_COUNTERATTACK_RATE) {
+                return {
+                    directive: {
+                        type: 'contact-counterattack',
+                        result: 'success',
+                        leadBefore: 'user',
+                        leadAfter: 'contact',
+                        instruction: '这一回合联系人抓住用户主导时露出的破绽，已经成功反攻并重新夺回主动权。请直接承接这次反转，把压迫感、情色张力和主导权易位写出来，不要轻轻带过。'
+                    },
+                    nextLead: 'contact',
+                    consumePending: false
+                };
+            }
+            return null;
+        }
+
+        function applyWanyeReplyDirectiveOutcome(outcome = null, session = currentRoomSession) {
+            if (!session || !outcome) return;
+            session.leadRole = normalizeWanyeLeadRole(outcome.nextLead || session.leadRole, session.leadRole);
+            if (outcome.consumePending) {
+                session.pendingTurnDirective = null;
+            }
+            syncWanyeRoomStatus(session);
+        }
+
+        function hydrateWanyeSessionFromDraft(draft = {}, contact = {}, scenario = {}, binding = {}) {
+            const normalizedMessages = normalizeWanyeSessionMessages(draft?.messages);
+            const scenarioId = String(draft?.scenarioId || scenario?.id || '').trim();
+            const scriptTitle = draft?.scriptTitle || scenario?.title || '未命名剧本';
+            const scriptTag = draft?.scriptTag || scenario?.tag || '晚契';
+            const scriptSummary = draft?.scriptSummary || scenario?.desc || '';
+            const messages = normalizedMessages.length ? normalizedMessages : [{
+                id: `wanye-scene-${Date.now().toString(36)}`,
+                role: 'system',
+                text: buildWanyeSceneLeadLine({ title: scriptTitle, tag: scriptTag }),
+                createdAt: Date.now()
+            }];
+            return {
+                id: String(draft?.id || `wanye-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`).trim(),
+                partner: draft?.partner || contact?.title || '联系人',
+                scenarioId,
+                scriptTitle,
+                scriptTag,
+                scriptSummary,
+                leadRole: normalizeWanyeLeadRole(draft?.leadRole || draft?.position || currentLeadRole, 'contact'),
+                pendingTurnDirective: normalizeWanyeTurnDirective(draft?.turnDirective || null),
+                contact,
+                binding,
+                messages,
+                startedAt: Math.max(0, Number(draft?.startedAt) || Date.now()),
+                phaseStartedAt: Math.max(0, Number(draft?.phaseStartedAt) || Number(draft?.startedAt) || Date.now()),
+                archiveCursor: Math.min(messages.length, Math.max(0, Number(draft?.archiveCursor) || 0)),
+                replyPending: false
+            };
+        }
+
+        function buildWanyeReplyPayload(mode = 'reply', extra = {}) {
+            if (!currentRoomSession) return {};
+            return {
+                mode: mode === 'opening'
+                    ? 'opening'
+                    : mode === 'transition'
+                        ? 'transition'
+                        : 'reply',
+                contactId: currentRoomSession.binding.contactId,
+                accountId: currentRoomSession.binding.accountId,
+                scenarioId: currentRoomSession.scenarioId,
+                scriptTitle: currentRoomSession.scriptTitle,
+                scriptTag: currentRoomSession.scriptTag,
+                scriptSummary: currentRoomSession.scriptSummary,
+                leadRole: normalizeWanyeLeadRole(currentRoomSession.leadRole, 'contact'),
+                position: getWanyeLeadRoleLabel(currentRoomSession.leadRole || 'contact'),
+                turnDirective: buildWanyeTurnDirectivePayload(extra?.turnDirective || null),
+                settings: buildWanyeSettingsPayload(),
+                messages: serializeWanyeSessionMessages(currentRoomSession.messages)
+            };
+        }
+
+        async function requestWanyeAssistantReply(mode = 'reply', options = {}) {
+            if (!currentRoomSession || currentRoomSession.replyPending) return false;
+            const sessionId = currentRoomSession.id;
+            const directiveOutcome = resolveWanyeTurnDirective(mode);
+            currentRoomSession.replyPending = true;
+            setWanyeSendState(true);
+            setWanyeBindingStatus(
+                currentRoomSession.binding,
+                mode === 'opening'
+                    ? '正在生成开场…'
+                    : mode === 'transition'
+                        ? '正在续接这一段…'
+                        : '正在生成回复…'
+            );
+            try {
+                const hostWindow = getWanyeHostWindow();
+                if (typeof hostWindow.rinnoGenerateWanyeReply !== 'function') {
+                    throw new Error('晚契回复桥接不可用，当前无法生成角色回复。');
+                }
+                const result = await Promise.resolve(hostWindow.rinnoGenerateWanyeReply(buildWanyeReplyPayload(mode, {
+                    turnDirective: directiveOutcome?.directive || null
+                })));
+                if (!result?.ok || !result?.reply) {
+                    throw new Error(result?.message || '晚契回复生成失败。');
+                }
+                if (!currentRoomSession || currentRoomSession.id !== sessionId) return false;
+                currentRoomSession.messages.push(createWanyeAssistantMessageFromReply(result.reply));
+                applyWanyeReplyDirectiveOutcome(directiveOutcome, currentRoomSession);
+                renderWanyeChatFlow();
+                void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+                setWanyeBindingStatus(currentRoomSession.binding);
+                return true;
+            } catch (error) {
+                console.warn('Wanye reply failed:', error);
+                if (currentRoomSession && currentRoomSession.id === sessionId) {
+                    setWanyeBindingStatus(currentRoomSession.binding, error?.message || '晚契回复生成失败。');
+                }
+                return false;
+            } finally {
+                if (currentRoomSession && currentRoomSession.id === sessionId) {
+                    currentRoomSession.replyPending = false;
+                    setWanyeSendState(false);
+                    if (options?.focusInput) roomInput?.focus();
+                }
+            }
+        }
+
+        async function enterRoom(contact = {}, scenario = {}) {
+            const binding = buildWanyeContactBinding(contact);
+            if (!binding.ok) {
+                setWanyeBindingStatus(binding);
+                return;
+            }
+            const draftResult = await fetchWanyeSessionDraft({
+                contactId: binding.contactId,
+                accountId: binding.accountId,
+                scenarioId: scenario.id || '',
+                scriptTitle: scenario.title || '未命名剧本'
+            });
+            if (!draftResult?.ok) {
+                setWanyeBindingStatus(binding, draftResult?.message || '晚契草稿读取失败。');
+                return;
+            }
+            document.getElementById('room-name').textContent = contact.title || '联系人';
+            currentRoomSession = draftResult.draft
+                ? hydrateWanyeSessionFromDraft(draftResult.draft, contact, scenario, binding)
+                : {
+                    id: `wanye-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+                    partner: contact.title || '联系人',
+                    scenarioId: scenario.id || '',
+                    scriptTitle: scenario.title || '未命名剧本',
+                    scriptTag: scenario.tag || '晚契',
+                    scriptSummary: scenario.desc || '',
+                    leadRole: normalizeWanyeLeadRole(currentLeadRole, 'contact'),
+                    pendingTurnDirective: null,
+                    contact,
+                    binding,
+                    messages: [{
+                        id: `wanye-scene-${Date.now().toString(36)}`,
+                        role: 'system',
+                        text: buildWanyeSceneLeadLine(scenario),
+                        createdAt: Date.now()
+                    }],
+                    startedAt: Date.now(),
+                    phaseStartedAt: Date.now(),
+                    archiveCursor: 0,
+                    replyPending: false
+                };
+            if (roomInput) {
+                roomInput.value = '';
+                roomInput.style.height = 'auto';
+            }
+            closeWanyeMessageActions();
+            closeWanyeMessageEdit();
+            setWanyeSendState(false);
+            syncWanyeRoomStatus(currentRoomSession);
+            setWanyeBindingStatus(binding, draftResult.draft ? '已恢复上次暂停扮演的记录。' : '');
+            renderWanyeChatFlow();
+            showView('view-room');
+            if (draftResult.draft) {
+                roomInput?.focus();
+                return;
+            }
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            void requestWanyeAssistantReply('opening', { focusInput: true });
+        }
+
+        async function confirmCustom() {
+            const contact = getWanyeContactById(currentCustomContactId);
+            if (!contact) return;
+            const title = trimWanyeText(document.getElementById('custom-title').value, 48) || '未知境遇';
+            const tag = trimWanyeText(document.getElementById('custom-tag').value, 48) || 'Custom Script';
+            const desc = trimWanyeText(document.getElementById('custom-desc').value, 220) || '一切由此开始。';
+            const result = await requestSaveWanyeScript(contact.contactId, {
+                title,
+                tag,
+                summary: desc,
+                source: 'manual'
+            });
+            if (!result?.ok || !result?.script) {
+                document.getElementById('scenario-char-prose').textContent = result?.message || '晚契剧本保存失败。';
+                return;
+            }
+            closeCustom();
+            await openScenarios(contact.contactId, { autoGenerate: false });
+            void enterRoom(contact, {
+                id: result.script.id,
+                title: result.script.title,
+                tag: result.script.tag,
+                desc: result.script.summary
+            });
+        }
+
+        async function sendWanyeMessage() {
+            if (!currentRoomSession || currentRoomSession.replyPending) return;
+            const value = String(roomInput?.value || '').replace(/\r/g, '').trim();
+            if (!value) return;
+            currentRoomSession.messages.push(createWanyeUserMessage(value));
+            if (roomInput) {
+                roomInput.value = '';
+                roomInput.style.height = 'auto';
+            }
+            renderWanyeChatFlow();
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            await requestWanyeAssistantReply('reply', { focusInput: true });
+        }
+
+        async function triggerWanyeSpecialAction(action = 'counter') {
+            if (!currentRoomSession || currentRoomSession.replyPending) return;
+            const success = Math.random() < WANYE_SPECIAL_ACTION_SUCCESS_RATE;
+            const safeLeadBefore = normalizeWanyeLeadRole(currentRoomSession.leadRole, 'contact');
+            const type = action === 'escape' ? 'escape' : 'counter';
+            const nextLead = success ? 'user' : 'contact';
+            const actionText = type === 'escape'
+                ? '你突然想脱身，试图从这场纠缠里逃开一点距离。'
+                : '你猛地反攻，试图把局面扳回自己手里。';
+            const instruction = type === 'escape'
+                ? (success
+                    ? '用户这次逃跑成功，已经挣开一点距离并把节奏改写到自己这边。请承接这次成功，写出短暂脱身后的喘息、追逐感和主导权回摆。'
+                    : '用户这次逃跑失败，被联系人立刻抓了回来。请直接写出更情色、更强势的惩罚与压制，不要收着写。')
+                : (success
+                    ? '用户这次反攻成功，已经顺势夺回主动权。请直接承接这个成功结果，写出攻守易位后的身体反应和权力变化。'
+                    : '用户这次反攻失败，被联系人压了回去。请立刻写出更情色、更强势的惩罚，不要轻轻带过。');
+            currentRoomSession.messages.push(createWanyeUserActionMessage(actionText));
+            currentRoomSession.pendingTurnDirective = normalizeWanyeTurnDirective({
+                type,
+                result: success ? 'success' : 'failure',
+                leadBefore: safeLeadBefore,
+                leadAfter: nextLead,
+                instruction
+            });
+            renderWanyeChatFlow();
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            await requestWanyeAssistantReply('reply', { focusInput: true });
+        }
+
+        function findWanyeMessageIndex(messageId = '') {
+            if (!currentRoomSession) return -1;
+            return currentRoomSession.messages.findIndex(message => String(message.id || '').trim() === String(messageId || '').trim());
+        }
+
+        async function backtrackWanyeMessage(messageId = '') {
+            if (!currentRoomSession) return;
+            const index = findWanyeMessageIndex(messageId);
+            if (index < 0) return;
+            if (index >= currentRoomSession.messages.length - 1) {
+                setWanyeBindingStatus(currentRoomSession.binding, '当前已经是最后一条，无需回溯。');
+                return;
+            }
+            const removedCount = currentRoomSession.messages.length - index - 1;
+            if (!window.confirm(`会清除这条消息之后的 ${removedCount} 条记录，确定回溯吗？`)) return;
+            currentRoomSession.messages = currentRoomSession.messages.slice(0, index + 1);
+            currentRoomSession.pendingTurnDirective = null;
+            renderWanyeChatFlow();
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            closeWanyeMessageActions();
+            setWanyeBindingStatus(currentRoomSession.binding, `已回溯，清除了 ${removedCount} 条后续记录。`);
+        }
+
+        async function rerollWanyeMessage(messageId = '') {
+            if (!currentRoomSession || currentRoomSession.replyPending) return;
+            const index = findWanyeMessageIndex(messageId);
+            if (index < 0) return;
+            const message = currentRoomSession.messages[index];
+            if (!message || !['assistant', 'user'].includes(String(message.role || '').trim())) return;
+            const isAssistant = message.role === 'assistant';
+            if (!window.confirm(isAssistant
+                ? '会删除这条联系人回复及其后续记录，然后重新生成，确定重回吗？'
+                : '会保留这条 user 消息、清除它后面的记录，并重新生成联系人回复，确定重回吗？')) return;
+            const nextMessages = isAssistant
+                ? currentRoomSession.messages.slice(0, index)
+                : currentRoomSession.messages.slice(0, index + 1);
+            const mode = nextMessages.some(item => item.role === 'user') ? 'reply' : 'opening';
+            currentRoomSession.messages = nextMessages;
+            currentRoomSession.pendingTurnDirective = null;
+            renderWanyeChatFlow();
+            void persistWanyeSessionDraft(currentRoomSession, { silent: true });
+            closeWanyeMessageActions();
+            await requestWanyeAssistantReply(mode, { focusInput: true });
+        }
+
+        function requestExit() {
+            document.getElementById('log-condom').checked = true;
+            document.getElementById('log-rounds').textContent = '1';
+            document.getElementById('log-creampies').textContent = '0';
+            setWanyeBindingStatus(currentRoomSession?.binding || {
+                ok: false,
+                message: '当前房间没有可用联系人，暂停扮演与保存并退出均不可用。'
+            });
+            modalLog.classList.add('active');
+        }
+
+        function updateCounter(elementId, delta) {
+            const element = document.getElementById(elementId);
+            let value = parseInt(element.textContent, 10) || 0;
+            value += delta;
+            if (value < 0) value = 0;
+            if (elementId === 'log-rounds' && value < 1) value = 1;
+            element.textContent = String(value);
+        }
+
+        function buildWanyeArchiveNote(session = null) {
+            const phaseMessages = getWanyeArchivableMessages(session);
+            if (!phaseMessages.length) return '';
+            const latestUser = [...phaseMessages].reverse().find(message => message.role === 'user' && buildWanyeMessagePlainText(message));
+            const latestAssistant = [...phaseMessages].reverse().find(message => message.role === 'assistant' && buildWanyeMessagePlainText(message));
+            const fragments = [];
+            if (latestUser) {
+                fragments.push(`用户最近一句：${trimWanyeText(buildWanyeMessagePlainText(latestUser), 80)}`);
+            }
+            if (latestAssistant) {
+                fragments.push(`对方回应：${trimWanyeText(buildWanyeMessagePlainText(latestAssistant), 100)}`);
+            }
+            return trimWanyeText(fragments.join('；'), 200);
+        }
+
+        async function confirmExit(action = 'skip-exit') {
+            const mode = action === true
+                ? 'save-exit'
+                : action === false
+                    ? 'skip-exit'
+                    : String(action || 'skip-exit');
+            if (!currentRoomSession) return;
+            if (mode === 'pause-exit') {
+                if (!currentRoomSession.binding?.ok) {
+                    setWanyeBindingStatus(currentRoomSession.binding || {
+                        ok: false,
+                        message: '当前房间没有可用联系人，无法暂停扮演。'
+                    });
+                    return;
+                }
+                setWanyeBindingStatus(currentRoomSession.binding, '正在保存暂停草稿…');
+                const paused = await persistWanyeSessionDraft(currentRoomSession);
+                if (!paused) return;
+                modalLog.classList.remove('active');
+                currentRoomSession = null;
+                setTimeout(() => {
+                    showView('view-directory');
+                }, 300);
+                return;
+            }
+            if (mode === 'save-exit') {
+                if (!currentRoomSession.binding?.ok) {
+                    setWanyeBindingStatus(currentRoomSession.binding || {
+                        ok: false,
+                        message: '当前房间没有可用联系人，无法归档。'
+                    });
+                    return;
+                }
+                const phaseMessages = getWanyeArchivableMessages(currentRoomSession);
+                if (!phaseMessages.length) {
+                    setWanyeBindingStatus(currentRoomSession.binding, '这一段还没有新的晚契内容可写入拾光。');
+                    return;
+                }
+                const condom = document.getElementById('log-condom').checked;
+                const rounds = parseInt(document.getElementById('log-rounds').textContent, 10) || 1;
+                const creampies = parseInt(document.getElementById('log-creampies').textContent, 10) || 0;
+                setWanyeBindingStatus(currentRoomSession.binding, '正在写入拾光并整理全量晚契…');
+                try {
+                    const hostWindow = getWanyeHostWindow();
+                    if (typeof hostWindow.rinnoArchiveWanyeSession !== 'function') {
+                        setWanyeBindingStatus(currentRoomSession.binding, '私叙归档桥接不可用，当前无法写入拾光。');
+                        return;
+                    }
+                    const result = await Promise.resolve(hostWindow.rinnoArchiveWanyeSession({
+                        id: currentRoomSession.id,
+                        contactId: currentRoomSession.binding.contactId,
+                        accountId: currentRoomSession.binding.accountId,
+                        partner: currentRoomSession.partner,
+                        scriptTitle: currentRoomSession.scriptTitle,
+                        scriptTag: currentRoomSession.scriptTag,
+                        leadRole: normalizeWanyeLeadRole(currentRoomSession.leadRole, 'contact'),
+                        position: getWanyeLeadRoleLabel(currentRoomSession.leadRole || 'contact'),
+                        protection: condom,
+                        rounds,
+                        creampies,
+                        note: buildWanyeArchiveNote(currentRoomSession),
+                        startedAt: currentRoomSession.phaseStartedAt || currentRoomSession.startedAt,
+                        endedAt: Date.now(),
+                        messages: phaseMessages
+                    }));
+                    if (!result?.ok) {
+                        setWanyeBindingStatus(currentRoomSession.binding, result?.message || '晚契记录写入失败，请稍后再试。');
+                        return;
+                    }
+                    currentRoomSession.archiveCursor = currentRoomSession.messages.length;
+                    currentRoomSession.phaseStartedAt = Date.now();
+                } catch (error) {
+                    console.warn('Failed to archive Wanye session:', error);
+                    setWanyeBindingStatus(currentRoomSession.binding, '晚契记录写入失败，请稍后再试。');
+                    return;
+                }
+                currentRoomSession.pendingTurnDirective = null;
+                const cleared = await discardWanyeSessionDraft(currentRoomSession, { silent: true });
+                if (!cleared) {
+                    setWanyeBindingStatus(currentRoomSession.binding, '晚契总结已完成，但草稿清理失败，请重试退出。');
+                    return;
+                }
+                setWanyeBindingStatus(currentRoomSession.binding, '拾光已收下这一段。');
+            }
+            if (mode === 'skip-exit') {
+                currentRoomSession.pendingTurnDirective = null;
+                const discarded = await discardWanyeSessionDraft(currentRoomSession);
+                if (!discarded) return;
+                if (currentRoomSession.binding?.ok) {
+                    setWanyeBindingStatus(currentRoomSession.binding, '已放弃这段未保存草稿。');
+                }
+            }
+            if (!['save-exit', 'skip-exit'].includes(mode)) return;
+            modalLog.classList.remove('active');
+            currentRoomSession = null;
+            setTimeout(() => {
+                showView('view-directory');
+            }, 300);
+        }
+
+        function clearWanyeLongPressTimer() {
+            if (!wanyeLongPressTimer) return;
+            window.clearTimeout(wanyeLongPressTimer);
+            wanyeLongPressTimer = 0;
+        }
+
+        document.getElementById('wanye-roster')?.addEventListener('click', event => {
+            const button = event.target instanceof Element ? event.target.closest('[data-wanye-contact-select]') : null;
+            if (!button) return;
+            const contactId = button.getAttribute('data-wanye-contact-select') || '';
+            void openScenarios(contactId);
+        });
+
+        document.getElementById('scenario-list-container')?.addEventListener('click', event => {
+            const deleteButton = event.target instanceof Element ? event.target.closest('[data-wanye-script-delete]') : null;
+            if (deleteButton) {
+                event.preventDefault();
+                event.stopPropagation();
+                const contact = getWanyeContactById(currentScenarioContactId);
+                const scriptId = deleteButton.getAttribute('data-wanye-script-delete') || '';
+                if (!contact || !scriptId) return;
+                if (!window.confirm('确定删除这条晚契剧本吗？')) return;
+                void (async () => {
+                    const result = await requestDeleteWanyeScript(contact.contactId, scriptId);
+                    if (!result?.ok && result?.message) {
+                        document.getElementById('scenario-char-prose').textContent = result.message;
+                    }
+                    await openScenarios(contact.contactId, { autoGenerate: false });
+                })();
+                return;
+            }
+            const addCard = event.target instanceof Element ? event.target.closest('[data-wanye-script-add]') : null;
+            if (addCard) {
+                event.preventDefault();
+                if (currentScenarioContactId) openCustomScript(currentScenarioContactId);
+                return;
+            }
+            const card = event.target instanceof Element ? event.target.closest('[data-wanye-script-enter]') : null;
+            if (!card) return;
+            const contact = getWanyeContactById(currentScenarioContactId);
+            if (!contact) return;
+            const scriptId = card.getAttribute('data-wanye-script-enter') || '';
+            void (async () => {
+                const result = await fetchWanyeScripts(contact.contactId);
+                const script = Array.isArray(result?.scripts)
+                    ? result.scripts.find(item => String(item?.id || '').trim() === String(scriptId || '').trim())
+                    : null;
+                if (!script) return;
+                void enterRoom(contact, {
+                    id: script.id,
+                    title: script.title,
+                    tag: script.tag,
+                    desc: script.summary
+                });
+            })();
+        });
+
+        roomInput?.addEventListener('input', function onInput() {
+            this.style.height = 'auto';
+            this.style.height = `${Math.min(this.scrollHeight, 120)}px`;
+        });
+
+        sendButton?.addEventListener('click', () => {
+            void sendWanyeMessage();
+        });
+
+        roomInput?.addEventListener('keydown', event => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                void sendWanyeMessage();
+            }
+        });
+
+        document.getElementById('wanye-counter-button')?.addEventListener('click', () => {
+            void triggerWanyeSpecialAction('counter');
+        });
+
+        document.getElementById('wanye-escape-button')?.addEventListener('click', () => {
+            void triggerWanyeSpecialAction('escape');
+        });
+
+        chatFlow?.addEventListener('pointerdown', event => {
+            const bubble = event.target instanceof Element ? event.target.closest('[data-wanye-message-id]') : null;
+            if (!bubble || !currentRoomSession || currentRoomSession.replyPending) return;
+            const messageId = bubble.getAttribute('data-wanye-message-id') || '';
+            clearWanyeLongPressTimer();
+            wanyeLongPressTimer = window.setTimeout(() => {
+                openWanyeMessageActions(messageId);
+                clearWanyeLongPressTimer();
+            }, WANYE_LONG_PRESS_MS);
+        });
+
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach(eventName => {
+            chatFlow?.addEventListener(eventName, clearWanyeLongPressTimer);
+        });
+
+        chatFlow?.addEventListener('contextmenu', event => {
+            const bubble = event.target instanceof Element ? event.target.closest('[data-wanye-message-id]') : null;
+            if (!bubble) return;
+            event.preventDefault();
+            openWanyeMessageActions(bubble.getAttribute('data-wanye-message-id') || '');
+        });
+
+        document.getElementById('modal-settings')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) closeWanyeSettings();
+        });
+
+        document.getElementById('modal-theme')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) closeWanyeThemeModal();
+        });
+
+        document.getElementById('modal-message-actions')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) {
+                closeWanyeMessageActions();
+                return;
+            }
+            const button = event.target instanceof Element ? event.target.closest('[data-wanye-message-action]') : null;
+            if (!button) return;
+            const action = button.getAttribute('data-wanye-message-action') || '';
+            if (action === 'edit') {
+                openWanyeMessageEdit(currentWanyeMessageActionId);
+                return;
+            }
+            if (action === 'backtrack') {
+                void backtrackWanyeMessage(currentWanyeMessageActionId);
+                return;
+            }
+            if (action === 'reroll') {
+                void rerollWanyeMessage(currentWanyeMessageActionId);
+            }
+        });
+
+        document.getElementById('modal-message-edit')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) closeWanyeMessageEdit();
+        });
+
+        document.getElementById('modal-custom')?.addEventListener('click', event => {
+            if (event.target === event.currentTarget) closeCustom();
+        });
+
+        syncWanyeLeadButtons();
+        applyWanyeThemeRuntime();
+        void loadWanyeContacts(false);
+    </script>
+
+</body>
+</html>
+
