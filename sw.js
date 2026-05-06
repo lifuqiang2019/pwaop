@@ -58,6 +58,70 @@ const PRECACHE_URLS = [
     'app/style/assets/fonts/xinjie-10.ttf'
 ];
 
+function isEdgeOneAuthParam(key) {
+    return typeof key === 'string' && (key.startsWith('eo_') || key.startsWith('eop_'));
+}
+
+function stripEdgeOneAuthParams(inputUrl) {
+    const url = new URL(inputUrl);
+    const keysToDelete = [];
+    for (const key of url.searchParams.keys()) {
+        if (isEdgeOneAuthParam(key)) keysToDelete.push(key);
+    }
+    for (const key of keysToDelete) url.searchParams.delete(key);
+    return url;
+}
+
+async function getEdgeOneAuthParamsForEvent(event) {
+    const candidates = [];
+    if (event && event.clientId) candidates.push(event.clientId);
+    if (event && event.resultingClientId) candidates.push(event.resultingClientId);
+    for (const clientId of candidates) {
+        try {
+            const client = await self.clients.get(clientId);
+            if (client && client.url) {
+                const url = new URL(client.url);
+                const params = new URLSearchParams();
+                for (const [key, value] of url.searchParams.entries()) {
+                    if (isEdgeOneAuthParam(key)) params.set(key, value);
+                }
+                if ([...params.keys()].length) return params;
+            }
+        } catch (_) {}
+    }
+    try {
+        const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        for (const client of clientList) {
+            if (!client || !client.url) continue;
+            const url = new URL(client.url);
+            const params = new URLSearchParams();
+            for (const [key, value] of url.searchParams.entries()) {
+                if (isEdgeOneAuthParam(key)) params.set(key, value);
+            }
+            if ([...params.keys()].length) return params;
+        }
+    } catch (_) {}
+    return null;
+}
+
+async function buildRequestsForEvent(event) {
+    const { request } = event;
+    const url = new URL(request.url);
+    const cacheKeyUrl = stripEdgeOneAuthParams(url.href);
+    const authParams = await getEdgeOneAuthParamsForEvent(event);
+    if (authParams && url.origin === self.location.origin) {
+        for (const [key, value] of authParams.entries()) {
+            if (!url.searchParams.has(key)) url.searchParams.set(key, value);
+        }
+    }
+    const networkUrl = url.href;
+    return {
+        request,
+        cacheKey: new Request(cacheKeyUrl.href, request),
+        networkRequest: new Request(networkUrl, request),
+    };
+}
+
 async function warmPrecache() {
     const cache = await caches.open(CACHE_NAME);
     await Promise.allSettled(
@@ -128,22 +192,22 @@ async function handleNavigation(request) {
 }
 
 async function handleAsset(event) {
-    const { request } = event;
+    const { cacheKey, networkRequest, request } = await buildRequestsForEvent(event);
     const cache = await caches.open(CACHE_NAME);
     if (isManifestOrAppIconRequest(request)) {
         try {
-            const response = await fetch(request, { cache: 'no-store' });
-            return await cacheResponse(cache, request, response);
+            const response = await fetch(networkRequest, { cache: 'no-store' });
+            return await cacheResponse(cache, cacheKey, response);
         } catch (error) {
             return (
-                await cache.match(request)
+                await cache.match(cacheKey)
                 || Response.error()
             );
         }
     }
-    const cached = await cache.match(request);
-    const networkPromise = fetch(request)
-        .then(response => cacheResponse(cache, request, response))
+    const cached = await cache.match(cacheKey);
+    const networkPromise = fetch(networkRequest)
+        .then(response => cacheResponse(cache, cacheKey, response))
         .catch(() => null);
 
     if (cached) {
@@ -168,7 +232,22 @@ async function handleAsset(event) {
 self.addEventListener('fetch', event => {
     if (!canHandleRequest(event.request)) return;
     if (event.request.mode === 'navigate') {
-        event.respondWith(handleNavigation(event.request));
+        event.respondWith((async () => {
+            const { cacheKey, networkRequest } = await buildRequestsForEvent(event);
+            const cache = await caches.open(CACHE_NAME);
+            try {
+                const response = await fetch(networkRequest);
+                await cacheResponse(cache, cacheKey, response);
+                return response;
+            } catch (error) {
+                return (
+                    await cache.match(cacheKey)
+                    || await cache.match('index.html')
+                    || await cache.match('./')
+                    || Response.error()
+                );
+            }
+        })());
         return;
     }
     event.respondWith(handleAsset(event));
